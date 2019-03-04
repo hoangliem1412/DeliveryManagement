@@ -1,0 +1,8 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:viewmodel="clr-namespace:ManagementDelivery.App.ViewModel"
+                    xmlns:local="clr-namespace:ManagementDelivery.App.ResourceScreen">
+    <viewmodel:MainViewModel x:Key="MainVM"></viewmodel:MainViewModel>
+    <viewmodel:CustomerViewModel x:Key="CustomerVM"></viewmodel:CustomerViewModel>
+    <viewmodel:DriverViewModel x:Key="DriverVM"></viewmodel:DriverViewModel>
+</ResourceDictionary>
