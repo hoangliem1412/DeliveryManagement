@@ -32,16 +32,18 @@ namespace ManagementDelivery.App.ViewModel
         public string Name { get => _name; set { _name = value; OnPropertyChanged(); } }
 
 
+        private string _address;
+        public string Address { get => _address; set { _address = value; OnPropertyChanged(); } }
+
         private string _phone;
         public string Phone { get => _phone; set { _phone = value; OnPropertyChanged(); } }
 
 
-        private string _address;
-        public string Address { get => _address; set { _address = value; OnPropertyChanged(); } }
-
-
         private string _moreInfo;
         public string MoreInfo { get => _moreInfo; set { _moreInfo = value; OnPropertyChanged(); } }
+
+        private string _note;
+        public string Note { get => _note; set { _note = value; OnPropertyChanged(); } }
 
         public ICommand AddCommand { get; set; }
         public ICommand EditCommand { get; set; }
@@ -49,8 +51,7 @@ namespace ManagementDelivery.App.ViewModel
 
         public CustomerViewModel()
         {
-            List = new ObservableCollection<Customer>(DataProvider.Ins.DB.Customers);
-            List.CollectionChanged += List_CollectionChanged;
+            List = new ObservableCollection<Customer>(DataProvider.Ins.DB.Customers.Where(x => !x.IsDelete));
 
             AddCommand = new RelayCommand<object>((p) => true, (p) =>
             {
@@ -74,10 +75,9 @@ namespace ManagementDelivery.App.ViewModel
                     customer.Phone = Phone;
                     customer.Address = Address;
                     customer.MoreInfo = MoreInfo;
+                    customer.Note = Note;
 
                     DataProvider.Ins.DB.SaveChanges();
-
-                    OnPropertyChanged("List");
                 }
             });
 
@@ -96,11 +96,6 @@ namespace ManagementDelivery.App.ViewModel
 
                 SelectedItem = null;
             });
-        }
-
-        private void List_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
-        {
-            throw new System.NotImplementedException();
         }
     }
 }

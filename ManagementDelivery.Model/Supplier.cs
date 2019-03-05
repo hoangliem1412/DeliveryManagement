@@ -26,9 +26,11 @@ namespace ManagementDelivery.Model
         [StringLength(20)]
         public string Phone { get; set; }
 
+        public string MoreInfo { get; set; }
+
         public string Note { get; set; }
 
-        public bool? IsDelete { get; set; }
+        public bool IsDelete { get; set; }
 
         public DateTime? InsertDate { get; set; }
 

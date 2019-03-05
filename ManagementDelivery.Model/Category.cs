@@ -21,11 +21,9 @@ namespace ManagementDelivery.Model
         [StringLength(200)]
         public string Name { get; set; }
 
-        public long? TotalQuantity { get; set; }
-
         public string Note { get; set; }
 
-        public bool? IsDelete { get; set; }
+        public bool IsDelete { get; set; }
 
         public DateTime? InsertDate { get; set; }
 

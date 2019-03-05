@@ -24,7 +24,7 @@ namespace ManagementDelivery.Model
 
         public string Note { get; set; }
 
-        public bool? IsDelete { get; set; }
+        public bool IsDelete { get; set; }
 
         public DateTime? InsertDate { get; set; }
 

@@ -75,21 +75,21 @@
                             </Grid>
                         </Grid>
                     </Button>
-                    <Button Command="{Binding OutputCommand}" Grid.Column="1" ToolTip="Xuất kho">
+                    <Button Command="{Binding OutputCommand}" Grid.Column="1" ToolTip="Nhà cung cấp">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition></RowDefinition>
                                 <RowDefinition></RowDefinition>
                             </Grid.RowDefinitions>
                             <Grid Grid.Row="0">
-                                <TextBlock Text="Xuất kho" HorizontalAlignment="Center"></TextBlock>
+                                <TextBlock Text="Nhà cung cấp" HorizontalAlignment="Center"></TextBlock>
                             </Grid>
                             <Grid Grid.Row="1">
                                 <materialDesign:PackIcon Width="24" Height="24"  HorizontalAlignment="Center"  Kind="ArrowUpBoldCircleOutline" />
                             </Grid>
                         </Grid>
                     </Button>
-                    <Button Command="{Binding ObjectCommand}" Grid.Column="2" ToolTip="Sản phẩm">
+                    <Button Command="{Binding ProductCommand}" Grid.Column="2" ToolTip="Sản phẩm">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition></RowDefinition>
@@ -103,7 +103,7 @@
                             </Grid>
                         </Grid>
                     </Button>
-                    <Button Grid.Column="3" Command="{Binding UnitCommand}" ToolTip="Người giao hàng">
+                    <Button Grid.Column="3" Command="{Binding DriverCommand}" ToolTip="Người giao hàng">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition></RowDefinition>
@@ -117,14 +117,14 @@
                             </Grid>
                         </Grid>
                     </Button>
-                    <Button Grid.Column="4" Command="{Binding SuplierCommand}" ToolTip="Kho">
+                    <Button Grid.Column="4" Command="{Binding SupplierCommand}" ToolTip="Nhà cung cấp">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition></RowDefinition>
                                 <RowDefinition></RowDefinition>
                             </Grid.RowDefinitions>
                             <Grid Grid.Row="0">
-                                <TextBlock Text="Kho" HorizontalAlignment="Center"></TextBlock>
+                                <TextBlock Text="Nhà cung cấp" HorizontalAlignment="Center"></TextBlock>
                             </Grid>
                             <Grid Grid.Row="1">
                                 <materialDesign:PackIcon Width="24" Height="24"  HorizontalAlignment="Center"  Kind="Factory" />
@@ -145,14 +145,14 @@
                             </Grid>
                         </Grid>
                     </Button>
-                    <Button Grid.Column="6" Command="{Binding UserCommand}" ToolTip="Người dùng">
+                    <Button Grid.Column="6" Command="{Binding CategoryCommand}" ToolTip="Loại sản phẩm">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition></RowDefinition>
                                 <RowDefinition></RowDefinition>
                             </Grid.RowDefinitions>
                             <Grid Grid.Row="0">
-                                <TextBlock Text="Người dùng" HorizontalAlignment="Center"></TextBlock>
+                                <TextBlock Text="Loại sản phẩm" HorizontalAlignment="Center"></TextBlock>
                             </Grid>
                             <Grid Grid.Row="1">
                                 <materialDesign:PackIcon Width="24" Height="24"  HorizontalAlignment="Center"  Kind="AccountMultiple" />
@@ -336,12 +336,12 @@
                             <Separator></Separator>
                         </Grid>
                         <Grid Grid.Row="2">
-                            <ListView ItemsSource="{Binding TonKhoList}">
+                            <ListView ItemsSource="{Binding DeliveryList}">
                                 <ListView.View>
                                     <GridView>
                                         <GridViewColumn Header="STT" DisplayMemberBinding="{Binding STT}"></GridViewColumn>
                                         <GridViewColumn Header="Khách hàng" DisplayMemberBinding="{Binding Customer.Name}"></GridViewColumn>
-                                        <GridViewColumn Header="Tài xế" DisplayMemberBinding="{Binding Driver.Name}"></GridViewColumn>
+                                        <GridViewColumn Header="Tổng tiền" DisplayMemberBinding="{Binding TotalPrice}"></GridViewColumn>
                                         <GridViewColumn Header="Ngày giao hàng" DisplayMemberBinding="{Binding DeliveryDate}"></GridViewColumn>
                                     </GridView>
                                 </ListView.View>

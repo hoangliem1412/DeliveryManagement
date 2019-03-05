@@ -5,4 +5,7 @@
     <viewmodel:MainViewModel x:Key="MainVM"></viewmodel:MainViewModel>
     <viewmodel:CustomerViewModel x:Key="CustomerVM"></viewmodel:CustomerViewModel>
     <viewmodel:DriverViewModel x:Key="DriverVM"></viewmodel:DriverViewModel>
+    <viewmodel:CategoryViewModel x:Key="CategoryVM"></viewmodel:CategoryViewModel>
+    <viewmodel:SupplierViewModel x:Key="SupplierVM"></viewmodel:SupplierViewModel>
+    <viewmodel:ProductViewModel x:Key="ProductVM"></viewmodel:ProductViewModel>
 </ResourceDictionary>

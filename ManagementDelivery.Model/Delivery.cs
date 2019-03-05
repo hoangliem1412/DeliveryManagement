@@ -26,7 +26,7 @@ namespace ManagementDelivery.Model
 
         public DateTime? DateDelivery { get; set; }
 
-        public bool? IsDelete { get; set; }
+        public bool IsDelete { get; set; }
 
         public DateTime? InsertDate { get; set; }
 
