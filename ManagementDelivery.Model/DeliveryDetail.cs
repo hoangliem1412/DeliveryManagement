@@ -7,13 +7,15 @@ namespace ManagementDelivery.Model
     using System.Data.Entity.Spatial;
 
     [Table("DeliveryDetail")]
-    public partial class DeliveryDetail
+    public partial class DeliveryDetail : EntityBase
     {
         public long Id { get; set; }
 
-        public long? DeliveryId { get; set; }
+        public long DeliveryId { get; set; }
 
-        public int? ProductId { get; set; }
+        public int ProductId { get; set; }
+
+        public int DriverId { get; set; }
 
         public int? Quantity { get; set; }
 
@@ -22,9 +24,7 @@ namespace ManagementDelivery.Model
 
         public int? Status { get; set; }
 
-        public DateTime? InsertDate { get; set; }
-
-        public DateTime? UpdateDate { get; set; }
+        public virtual Driver Driver { get; set; }
 
         public virtual Delivery Delivery { get; set; }
 

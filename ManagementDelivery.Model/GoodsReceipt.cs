@@ -7,7 +7,7 @@ namespace ManagementDelivery.Model
     using System.Data.Entity.Spatial;
 
     [Table("GoodsReceipt")]
-    public partial class GoodsReceipt
+    public partial class GoodsReceipt : EntityBase
     {
         public int Id { get; set; }
 
@@ -18,10 +18,6 @@ namespace ManagementDelivery.Model
         public int? Quantity { get; set; }
 
         public DateTime? DateReceipt { get; set; }
-
-        public DateTime? InsertDate { get; set; }
-
-        public DateTime? UpdateDate { get; set; }
 
         public virtual Product Product { get; set; }
 

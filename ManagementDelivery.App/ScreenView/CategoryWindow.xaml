@@ -39,8 +39,8 @@
             <!--các element binding từ selected item-->
             <materialDesign:Card Grid.Row="0" Margin="5">
                 <WrapPanel Margin="0 0 0 10">
-                    <TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" Margin="5 5 15 5" materialDesign:HintAssist.Hint="Tên khách hàng" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-                    <TextBox Text="{Binding Note, UpdateSourceTrigger=PropertyChanged}" Margin="5 5 15 5" materialDesign:HintAssist.Hint="Điện thoại" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                    <TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" Margin="5 5 15 5" materialDesign:HintAssist.Hint="Tên loại" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                    <TextBox Text="{Binding Note, UpdateSourceTrigger=PropertyChanged}" Margin="5 5 15 5" materialDesign:HintAssist.Hint="Ghi chú" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
                 </WrapPanel>
             </materialDesign:Card>
 
@@ -61,6 +61,7 @@
                                 <GridViewColumn Header="Tên loại" DisplayMemberBinding="{Binding Name}"></GridViewColumn>
                                 <GridViewColumn Header="Tổng số sản phẩm" DisplayMemberBinding="{Binding Products.Count}"></GridViewColumn>
                                 <GridViewColumn Header="Ghi chú" DisplayMemberBinding="{Binding Note}"></GridViewColumn>
+                                <GridViewColumn Header="Ngày cập nhật" DisplayMemberBinding="{Binding UpdateAt}"></GridViewColumn>
                             </GridView>
                         </ListView.View>
                     </ListView>

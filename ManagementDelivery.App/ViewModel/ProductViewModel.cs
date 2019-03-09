@@ -14,8 +14,8 @@ namespace ManagementDelivery.App.ViewModel
         private ObservableCollection<Product> _list;
         public ObservableCollection<Product> List { get => _list; set { _list = value; OnPropertyChanged(); } }
 
-        private ObservableCollection<Category> _listCategories;
-        public ObservableCollection<Category> ListCategory { get => _listCategories; set { _listCategories = value; OnPropertyChanged(); } }
+        private ObservableCollection<ProductCategory> _listCategories;
+        public ObservableCollection<ProductCategory> ListCategory { get => _listCategories; set { _listCategories = value; OnPropertyChanged(); } }
 
         private Product _selectedItem;
         public Product SelectedItem
@@ -29,6 +29,7 @@ namespace ManagementDelivery.App.ViewModel
                 {
                     Name = SelectedItem.Name;
                     CategoryName = SelectedItem.Category.Name;
+                    SelectedItemCategory = SelectedItem.Category;
                     Price = SelectedItem.Price;
                     PurchasePrice = SelectedItem.PurchasePrice;
                     Description = SelectedItem.Description;
@@ -36,8 +37,8 @@ namespace ManagementDelivery.App.ViewModel
             }
         }
 
-        private Category _selectedItemCategory;
-        public Category SelectedItemCategory
+        private ProductCategory _selectedItemCategory;
+        public ProductCategory SelectedItemCategory
         {
             get => _selectedItemCategory;
             set
@@ -73,11 +74,20 @@ namespace ManagementDelivery.App.ViewModel
         public ProductViewModel()
         {
             List = new ObservableCollection<Product>(DataProvider.Ins.DB.Products.Where(x => !x.IsDelete));
-            ListCategory = new ObservableCollection<Category>(DataProvider.Ins.DB.Categories.Where(x => !x.IsDelete));
+            ListCategory = new ObservableCollection<ProductCategory>(DataProvider.Ins.DB.Categories.Where(x => !x.IsDelete));
 
             AddCommand = new RelayCommand<object>((p) => true, (p) =>
             {
-                var product = new Product() { Name = Name, CategoryId = CategoryId, Price = Price, PurchasePrice = PurchasePrice, Description = Description };
+                var product = new Product()
+                {
+                    Name = Name,
+                    CategoryId = CategoryId,
+                    Price = Price,
+                    PurchasePrice = PurchasePrice,
+                    Description = Description,
+                    InsertAt = DateTime.Now,
+                    UpdateAt = DateTime.Now
+                };
 
                 DataProvider.Ins.DB.Products.Add(product);
                 DataProvider.Ins.DB.SaveChanges();
@@ -98,6 +108,7 @@ namespace ManagementDelivery.App.ViewModel
                     product.Price = Price;
                     product.PurchasePrice = PurchasePrice;
                     product.Description = Description;
+                    product.UpdateAt = DateTime.Now;
 
                     DataProvider.Ins.DB.SaveChanges();
                 }

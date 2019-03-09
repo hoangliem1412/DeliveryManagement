@@ -7,7 +7,7 @@ namespace ManagementDelivery.Model
     using System.Data.Entity.Spatial;
 
     [Table("Customer")]
-    public partial class Customer
+    public partial class Customer : EntityBase
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Customer()
@@ -15,6 +15,7 @@ namespace ManagementDelivery.Model
             Deliveries = new HashSet<Delivery>();
         }
 
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
         [Required]
@@ -31,10 +32,6 @@ namespace ManagementDelivery.Model
         public string Note { get; set; }
 
         public bool IsDelete { get; set; }
-
-        public DateTime? InsertDate { get; set; }
-
-        public DateTime? UpdateDate { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Delivery> Deliveries { get; set; }

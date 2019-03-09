@@ -7,7 +7,7 @@ namespace ManagementDelivery.Model
     using System.Data.Entity.Spatial;
 
     [Table("Stock")]
-    public partial class Stock
+    public partial class Stock : EntityBase
     {
         public int Id { get; set; }
 
@@ -16,10 +16,6 @@ namespace ManagementDelivery.Model
         public int? Quantity { get; set; }
 
         public bool IsDelete { get; set; }
-
-        public DateTime? InsertDate { get; set; }
-
-        public DateTime? UpdateDate { get; set; }
 
         public virtual Product Product { get; set; }
     }

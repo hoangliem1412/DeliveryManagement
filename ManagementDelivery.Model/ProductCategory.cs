@@ -6,11 +6,11 @@ namespace ManagementDelivery.Model
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("Category")]
-    public partial class Category
+    [Table("ProductCategory")]
+    public partial class ProductCategory : EntityBase
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Category()
+        public ProductCategory()
         {
             Products = new HashSet<Product>();
         }
@@ -24,10 +24,6 @@ namespace ManagementDelivery.Model
         public string Note { get; set; }
 
         public bool IsDelete { get; set; }
-
-        public DateTime? InsertDate { get; set; }
-
-        public DateTime? UpdateDate { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Product> Products { get; set; }

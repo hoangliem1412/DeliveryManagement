@@ -7,7 +7,7 @@ namespace ManagementDelivery.Model
     using System.Data.Entity.Spatial;
 
     [Table("Supplier")]
-    public partial class Supplier
+    public partial class Supplier : EntityBase
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Supplier()
@@ -31,10 +31,6 @@ namespace ManagementDelivery.Model
         public string Note { get; set; }
 
         public bool IsDelete { get; set; }
-
-        public DateTime? InsertDate { get; set; }
-
-        public DateTime? UpdateDate { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<GoodsReceipt> GoodsReceipts { get; set; }

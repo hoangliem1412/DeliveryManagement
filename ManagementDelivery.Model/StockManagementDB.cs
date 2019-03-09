@@ -1,9 +1,6 @@
 namespace ManagementDelivery.Model
 {
-    using System;
     using System.Data.Entity;
-    using System.ComponentModel.DataAnnotations.Schema;
-    using System.Linq;
 
     public partial class StockManagementDB : DbContext
     {
@@ -12,7 +9,7 @@ namespace ManagementDelivery.Model
         {
         }
 
-        public virtual DbSet<Category> Categories { get; set; }
+        public virtual DbSet<ProductCategory> Categories { get; set; }
         public virtual DbSet<Customer> Customers { get; set; }
         public virtual DbSet<Delivery> Deliveries { get; set; }
         public virtual DbSet<DeliveryDetail> DeliveryDetails { get; set; }
@@ -30,7 +27,7 @@ namespace ManagementDelivery.Model
 
             modelBuilder.Entity<Delivery>()
                 .Property(e => e.TotalPrice)
-                .IsFixedLength();
+                .HasPrecision(19, 4);
 
             modelBuilder.Entity<DeliveryDetail>()
                 .Property(e => e.Price)

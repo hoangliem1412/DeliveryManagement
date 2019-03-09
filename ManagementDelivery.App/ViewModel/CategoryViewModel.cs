@@ -11,11 +11,11 @@ namespace ManagementDelivery.App.ViewModel
 {
     public class CategoryViewModel : ViewModelBase
     {
-        private ObservableCollection<Category> _list;
-        public ObservableCollection<Category> List { get => _list; set { _list = value; OnPropertyChanged(); } }
+        private ObservableCollection<ProductCategory> _list;
+        public ObservableCollection<ProductCategory> List { get => _list; set { _list = value; OnPropertyChanged(); } }
 
-        private Category _selectedItem;
-        public Category SelectedItem
+        private ProductCategory _selectedItem;
+        public ProductCategory SelectedItem
         {
             get => _selectedItem;
             set
@@ -44,17 +44,30 @@ namespace ManagementDelivery.App.ViewModel
             set { _note = value; OnPropertyChanged(); }
         }
 
+        private string _updateAt;
+        public string UpdateAt
+        {
+            get => _updateAt;
+            set { _updateAt = value; OnPropertyChanged(); }
+        }
+
         public ICommand AddCommand { get; set; }
         public ICommand EditCommand { get; set; }
         public ICommand DeleteCommand { get; set; }
 
         public CategoryViewModel()
         {
-            List = new ObservableCollection<Category>(DataProvider.Ins.DB.Categories.Where(x => !x.IsDelete));
+            List = new ObservableCollection<ProductCategory>(DataProvider.Ins.DB.Categories.Where(x => !x.IsDelete));
 
             AddCommand = new RelayCommand<object>((p) => true, (p) =>
             {
-                var category = new Category() { Name = Name, Note = Note };
+                var category = new ProductCategory()
+                {
+                    Name = Name,
+                    Note = Note,
+                    InsertAt = DateTime.Now,
+                    UpdateAt = DateTime.Now
+                };
 
                 DataProvider.Ins.DB.Categories.Add(category);
                 DataProvider.Ins.DB.SaveChanges();
@@ -72,6 +85,7 @@ namespace ManagementDelivery.App.ViewModel
                 {
                     category.Name = Name;
                     category.Note = Note;
+                    category.UpdateAt = DateTime.Now;
 
                     DataProvider.Ins.DB.SaveChanges();
                 }
@@ -86,6 +100,7 @@ namespace ManagementDelivery.App.ViewModel
                 if (category != null)
                 {
                     category.IsDelete = true;
+                    category.UpdateAt = DateTime.Now;
                     DataProvider.Ins.DB.SaveChanges();
                     List.Remove(category);
                 }

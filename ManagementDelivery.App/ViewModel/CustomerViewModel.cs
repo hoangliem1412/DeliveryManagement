@@ -1,4 +1,5 @@
-﻿using ManagementDelivery.Model;
+﻿using System;
+using ManagementDelivery.Model;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
@@ -55,7 +56,15 @@ namespace ManagementDelivery.App.ViewModel
 
             AddCommand = new RelayCommand<object>((p) => true, (p) =>
             {
-                var customer = new Customer() { Name = Name, Phone = Phone, Address = Address, MoreInfo = MoreInfo };
+                var customer = new Customer()
+                {
+                    Name = Name,
+                    Phone = Phone,
+                    Address = Address,
+                    MoreInfo = MoreInfo,
+                    InsertAt = DateTime.Now,
+                    UpdateAt = DateTime.Now
+                };
 
                 DataProvider.Ins.DB.Customers.Add(customer);
                 DataProvider.Ins.DB.SaveChanges();
@@ -76,6 +85,7 @@ namespace ManagementDelivery.App.ViewModel
                     customer.Address = Address;
                     customer.MoreInfo = MoreInfo;
                     customer.Note = Note;
+                    customer.UpdateAt = DateTime.Now;
 
                     DataProvider.Ins.DB.SaveChanges();
                 }

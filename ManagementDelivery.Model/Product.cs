@@ -7,7 +7,7 @@ namespace ManagementDelivery.Model
     using System.Data.Entity.Spatial;
 
     [Table("Product")]
-    public partial class Product
+    public partial class Product : EntityBase
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Product()
@@ -34,11 +34,7 @@ namespace ManagementDelivery.Model
 
         public bool IsDelete { get; set; }
 
-        public DateTime? InsertDate { get; set; }
-
-        public DateTime? UpdateDate { get; set; }
-
-        public virtual Category Category { get; set; }
+        public virtual ProductCategory Category { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DeliveryDetail> DeliveryDetails { get; set; }

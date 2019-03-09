@@ -98,7 +98,16 @@ namespace ManagementDelivery.App.ViewModel
 
             AddCommand = new RelayCommand<object>((p) => true, (p) =>
             {
-                var supplier = new Supplier() { Name = Name, Phone = Phone, Address = Address, Note = Note, MoreInfo = MoreInfo };
+                var supplier = new Supplier()
+                {
+                    Name = Name,
+                    Phone = Phone,
+                    Address = Address,
+                    Note = Note,
+                    MoreInfo = MoreInfo,
+                    InsertAt = DateTime.Now,
+                    UpdateAt = DateTime.Now
+                };
 
                 DataProvider.Ins.DB.Suppliers.Add(supplier);
                 DataProvider.Ins.DB.SaveChanges();
@@ -111,15 +120,15 @@ namespace ManagementDelivery.App.ViewModel
                 return SelectedItem != null && DataProvider.Ins.DB.Suppliers.Any(x => x.Id == SelectedItem.Id);
             }, (p) =>
             {
-                var category = DataProvider.Ins.DB.Suppliers.FirstOrDefault(x => x.Id == SelectedItem.Id);
-                if (category != null)
+                var supplier = DataProvider.Ins.DB.Suppliers.FirstOrDefault(x => x.Id == SelectedItem.Id);
+                if (supplier != null)
                 {
-                    category.Name = Name;
-                    category.Phone = Phone;
-                    category.Address = Address;
-                    category.MoreInfo = MoreInfo;
-                    category.Note = Note;
-
+                    supplier.Name = Name;
+                    supplier.Phone = Phone;
+                    supplier.Address = Address;
+                    supplier.MoreInfo = MoreInfo;
+                    supplier.Note = Note;
+                    supplier.UpdateAt = DateTime.Now;
                     DataProvider.Ins.DB.SaveChanges();
                 }
             });

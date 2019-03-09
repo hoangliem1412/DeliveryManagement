@@ -7,7 +7,7 @@ namespace ManagementDelivery.Model
     using System.Data.Entity.Spatial;
 
     [Table("Delivery")]
-    public partial class Delivery
+    public partial class Delivery : EntityBase
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Delivery()
@@ -17,20 +17,14 @@ namespace ManagementDelivery.Model
 
         public long Id { get; set; }
 
-        public int? CustomerId { get; set; }
+        public int CustomerId { get; set; }
 
-        public DateTime? DeliveryDate { get; set; }
+        public DateTime DeliveryDate { get; set; }
 
-        [StringLength(10)]
-        public string TotalPrice { get; set; }
-
-        public DateTime? DateDelivery { get; set; }
+        [Column(TypeName = "money")]
+        public decimal? TotalPrice { get; set; }
 
         public bool IsDelete { get; set; }
-
-        public DateTime? InsertDate { get; set; }
-
-        public DateTime? UpdateDate { get; set; }
 
         public virtual Customer Customer { get; set; }
 

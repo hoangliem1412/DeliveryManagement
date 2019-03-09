@@ -58,7 +58,15 @@ namespace ManagementDelivery.App.ViewModel
 
             AddCommand = new RelayCommand<object>((p) => true, (p) =>
             {
-                var driver = new Driver() { Name = Name, Phone = Phone, Address = Address, MoreInfo = MoreInfo };
+                var driver = new Driver()
+                {
+                    Name = Name,
+                    Phone = Phone,
+                    Address = Address,
+                    MoreInfo = MoreInfo,
+                    InsertAt = DateTime.Now,
+                    UpdateAt = DateTime.Now
+                };
 
                 DataProvider.Ins.DB.Drivers.Add(driver);
                 DataProvider.Ins.DB.SaveChanges();
@@ -79,6 +87,7 @@ namespace ManagementDelivery.App.ViewModel
                     driver.Address = Address;
                     driver.MoreInfo = MoreInfo;
                     driver.Note = Note;
+                    driver.UpdateAt = DateTime.Now;
 
                     DataProvider.Ins.DB.SaveChanges();
                 }

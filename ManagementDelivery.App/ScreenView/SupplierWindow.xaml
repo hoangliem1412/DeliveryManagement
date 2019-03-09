@@ -66,6 +66,7 @@
                                 <GridViewColumn Header="Điện thoại" DisplayMemberBinding="{Binding Phone}"></GridViewColumn>
                                 <GridViewColumn Header="Thông tin thêm" DisplayMemberBinding="{Binding MoreInfo}"></GridViewColumn>
                                 <GridViewColumn Header="Ghi chú" DisplayMemberBinding="{Binding Note}"></GridViewColumn>
+                                <GridViewColumn Header="Ngày cập nhật" DisplayMemberBinding="{Binding UpdateAt}"></GridViewColumn>
                             </GridView>
                         </ListView.View>
                     </ListView>
