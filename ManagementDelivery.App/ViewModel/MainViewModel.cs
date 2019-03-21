@@ -77,7 +77,8 @@ namespace ManagementDelivery.App.ViewModel
         public ICommand SupplierCommand { get; set; }
         public ICommand CustomerCommand { get; set; }
         public ICommand DriverCommand { get; set; }
-
+        public ICommand GoodsReceiptCommand { get; set; }
+        
         public MainViewModel()
         {
             ListDelivery = new ObservableCollection<Delivery>(DataProvider.Ins.DB.Deliveries.Where(x => !x.IsDelete).OrderByDescending(x => x.UpdateAt));
@@ -88,12 +89,54 @@ namespace ManagementDelivery.App.ViewModel
 
             Inventory = DataProvider.Ins.DB.Stocks.Where(x => !x.IsDelete).Select(x => x.Quantity).DefaultIfEmpty(0).Sum();
 
-            CustomerCommand = new RelayCommand<object>((p) => true, (p) => { CustomerWindow wd = new CustomerWindow(); wd.ShowDialog(); });
-            ProductCategoryCommand = new RelayCommand<object>((p) => true, (p) => { ProductCategoryWindow wd = new ProductCategoryWindow(); wd.ShowDialog(); });
-            DriverCommand = new RelayCommand<object>((p) => true, (p) => { DriverWindow wd = new DriverWindow(); wd.ShowDialog(); });
-            SupplierCommand = new RelayCommand<object>((p) => true, (p) => { SupplierWindow wd = new SupplierWindow(); wd.ShowDialog(); });
-            ProductCommand = new RelayCommand<object>((p) => true, (p) => { ProductWindow wd = new ProductWindow(); wd.ShowDialog(); });
-            StockCommand = new RelayCommand<object>((p) => true, (p) => { StockWindow wd = new StockWindow(); wd.ShowDialog(); });
+            CustomerCommand = new RelayCommand<object>((p) => true, (p) =>
+            {
+                CustomerWindow wd = new CustomerWindow();
+                wd.DataContext = new CustomerViewModel();
+                wd.ShowDialog();
+            });
+
+            ProductCategoryCommand = new RelayCommand<object>((p) => true, (p) =>
+            {
+                ProductCategoryWindow wd = new ProductCategoryWindow();
+                wd.DataContext = new ProductCategoryViewModel();
+                wd.ShowDialog();
+            });
+            DriverCommand = new RelayCommand<object>((p) => true, (p) =>
+            {
+                DriverWindow wd = new DriverWindow();
+                wd.DataContext = new DriverViewModel();
+                wd.ShowDialog();
+            });
+
+            SupplierCommand = new RelayCommand<object>((p) => true, (p) =>
+            {
+                SupplierWindow wd = new SupplierWindow();
+                wd.DataContext = new SupplierViewModel();
+                wd.ShowDialog();
+            });
+
+            ProductCommand = new RelayCommand<object>((p) => true, (p) =>
+            {
+                ProductWindow wd = new ProductWindow();
+                wd.DataContext = new ProductViewModel();
+                wd.ShowDialog();
+            });
+
+            StockCommand = new RelayCommand<object>((p) => true, (p) =>
+            {
+                StockWindow wd = new StockWindow();
+                wd.DataContext = new StockViewModel();
+                wd.ShowDialog();
+            });
+
+            GoodsReceiptCommand = new RelayCommand<object>((p) => true, (p) =>
+            {
+                GoodsReceiptWindow wd = new GoodsReceiptWindow();
+                wd.DataContext = new GoodsReceiptViewModel();
+                wd.ShowDialog();
+            });
+
             AddDeliveryCommand = new RelayCommand<object>((p) => true, (p) =>
             {
                 DeliveryWindow wd = new DeliveryWindow();
@@ -103,6 +146,7 @@ namespace ManagementDelivery.App.ViewModel
 
                 ListDelivery = new ObservableCollection<Delivery>(DataProvider.Ins.DB.Deliveries.Where(x => !x.IsDelete).OrderByDescending(x => x.UpdateAt));
             });
+
             EditDeliveryCommand = new RelayCommand<object>((p) => true, (p) => 
             {
                 DeliveryWindow wd = new DeliveryWindow();

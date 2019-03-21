@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using System.Windows.Input;
 using ManagementDelivery.Model;
 
@@ -48,7 +49,11 @@ namespace ManagementDelivery.App.ViewModel
                 _selectedItemProduct = value;
                 OnPropertyChanged();
 
-                if (value != null) ProductId = value.Id;
+                if (value != null)
+                {
+                    ProductId = value.Id;
+                    PurchasePrice = value.PurchasePrice ?? 0;
+                }
             }
         }
 

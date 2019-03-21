@@ -61,14 +61,14 @@
                         <ColumnDefinition></ColumnDefinition>
                         <ColumnDefinition></ColumnDefinition>
                     </Grid.ColumnDefinitions>
-                    <Button Command="{Binding DeliveryCommand}" Grid.Column="0" ToolTip="Giao hàng">
+                    <Button Command="{Binding GoodsReceiptCommand}" Grid.Column="0" ToolTip="Giao hàng">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition></RowDefinition>
                                 <RowDefinition></RowDefinition>
                             </Grid.RowDefinitions>
                             <Grid Grid.Row="0">
-                                <TextBlock Text="Giao hàng" HorizontalAlignment="Center"></TextBlock>
+                                <TextBlock Text="Nhập hàng" HorizontalAlignment="Center"></TextBlock>
                             </Grid>
                             <Grid Grid.Row="1">
                                 <materialDesign:PackIcon HorizontalAlignment="Center" Width="24" Height="24"  Kind="ArrowDownBoldCircleOutline" />
