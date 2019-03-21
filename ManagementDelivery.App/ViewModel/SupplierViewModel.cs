@@ -91,10 +91,12 @@ namespace ManagementDelivery.App.ViewModel
         public ICommand AddCommand { get; set; }
         public ICommand EditCommand { get; set; }
         public ICommand DeleteCommand { get; set; }
+        public ICommand ClearCommand { get; set; }
+        public ICommand RefreshCommand { get; set; }
 
         public SupplierViewModel()
         {
-            List = new ObservableCollection<Supplier>(DataProvider.Ins.DB.Suppliers.Where(x => !x.IsDelete));
+            List = new ObservableCollection<Supplier>(DataProvider.Ins.DB.Suppliers.Where(x => !x.IsDelete).OrderByDescending(x => x.UpdateAt));
 
             AddCommand = new RelayCommand<object>((p) => true, (p) =>
             {
@@ -148,6 +150,25 @@ namespace ManagementDelivery.App.ViewModel
 
                 SelectedItem = null;
             });
+
+
+            ClearCommand = new RelayCommand<object>((p) => !string.IsNullOrEmpty(Name) || !string.IsNullOrEmpty(Phone) || !string.IsNullOrEmpty(Address) || !string.IsNullOrEmpty(MoreInfo) || !string.IsNullOrEmpty(Note), (p) =>
+                {
+                    SelectedItem = null;
+                    Name = null;
+                    Phone = null;
+                    Address = null;
+                    MoreInfo = null;
+                    Note = null;
+                }
+            );
+
+            RefreshCommand = new RelayCommand<object>((p) => true,
+                (p) =>
+                {
+                    List = new ObservableCollection<Supplier>(DataProvider.Ins.DB.Suppliers.Where(x => !x.IsDelete).OrderByDescending(x => x.UpdateAt));
+                }
+            );
         }
     }
 }

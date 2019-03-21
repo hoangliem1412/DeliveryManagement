@@ -9,7 +9,7 @@ using ManagementDelivery.Model;
 
 namespace ManagementDelivery.App.ViewModel
 {
-    public class CategoryViewModel : ViewModelBase
+    public class ProductCategoryViewModel : ViewModelBase
     {
         private ObservableCollection<ProductCategory> _list;
         public ObservableCollection<ProductCategory> List { get => _list; set { _list = value; OnPropertyChanged(); } }
@@ -54,10 +54,12 @@ namespace ManagementDelivery.App.ViewModel
         public ICommand AddCommand { get; set; }
         public ICommand EditCommand { get; set; }
         public ICommand DeleteCommand { get; set; }
+        public ICommand ClearCommand { get; set; }
+        public ICommand RefreshCommand { get; set; }
 
-        public CategoryViewModel()
+        public ProductCategoryViewModel()
         {
-            List = new ObservableCollection<ProductCategory>(DataProvider.Ins.DB.Categories.Where(x => !x.IsDelete));
+            List = new ObservableCollection<ProductCategory>(DataProvider.Ins.DB.Categories.Where(x => !x.IsDelete).OrderByDescending(x => x.UpdateAt));
 
             AddCommand = new RelayCommand<object>((p) => true, (p) =>
             {
@@ -107,6 +109,21 @@ namespace ManagementDelivery.App.ViewModel
 
                 SelectedItem = null;
             });
+
+            ClearCommand = new RelayCommand<object>((p) => !string.IsNullOrEmpty(Name) || !string.IsNullOrEmpty(Note), (p) =>
+                {
+                    SelectedItem = null;
+                    Name = null;
+                    Note = null;
+                }
+            );
+
+            RefreshCommand = new RelayCommand<object>((p) => true,
+                (p) =>
+                {
+                    List = new ObservableCollection<ProductCategory>(DataProvider.Ins.DB.Categories.Where(x => !x.IsDelete).OrderByDescending(x => x.UpdateAt));
+                }
+            );
         }
     }
 }

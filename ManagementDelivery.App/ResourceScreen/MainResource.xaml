@@ -5,7 +5,10 @@
     <viewmodel:MainViewModel x:Key="MainVM"></viewmodel:MainViewModel>
     <viewmodel:CustomerViewModel x:Key="CustomerVM"></viewmodel:CustomerViewModel>
     <viewmodel:DriverViewModel x:Key="DriverVM"></viewmodel:DriverViewModel>
-    <viewmodel:CategoryViewModel x:Key="CategoryVM"></viewmodel:CategoryViewModel>
+    <viewmodel:ProductCategoryViewModel x:Key="ProductCategoryVM"></viewmodel:ProductCategoryViewModel>
     <viewmodel:SupplierViewModel x:Key="SupplierVM"></viewmodel:SupplierViewModel>
     <viewmodel:ProductViewModel x:Key="ProductVM"></viewmodel:ProductViewModel>
+    <viewmodel:StockViewModel x:Key="StockVM"></viewmodel:StockViewModel>
+    <viewmodel:DeliveryViewModel x:Key="DeliveryVM"></viewmodel:DeliveryViewModel>
+    <viewmodel:GoodsReceiptViewModel x:Key="GoodsReceiptVM"></viewmodel:GoodsReceiptViewModel>
 </ResourceDictionary>

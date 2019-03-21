@@ -11,13 +11,15 @@ namespace ManagementDelivery.Model
     {
         public int Id { get; set; }
 
-        public int? ProductId { get; set; }
+        public int ProductId { get; set; }
 
         public int? SupplierId { get; set; }
 
-        public int? Quantity { get; set; }
+        public decimal PurchasePrice { get; set; }
 
-        public DateTime? DateReceipt { get; set; }
+        public int Quantity { get; set; }
+
+        public DateTime DateReceipt { get; set; }
 
         public virtual Product Product { get; set; }
 

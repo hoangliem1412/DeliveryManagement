@@ -17,12 +17,12 @@ namespace ManagementDelivery.Model
 
         public int DriverId { get; set; }
 
-        public int? Quantity { get; set; }
+        public int Quantity { get; set; }
 
         [Column(TypeName = "money")]
-        public decimal? Price { get; set; }
+        public decimal Price { get; set; }
 
-        public int? Status { get; set; }
+        public int Status { get; set; }
 
         public virtual Driver Driver { get; set; }
 

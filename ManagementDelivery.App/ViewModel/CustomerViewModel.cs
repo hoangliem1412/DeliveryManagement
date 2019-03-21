@@ -8,8 +8,8 @@ namespace ManagementDelivery.App.ViewModel
 {
     public class CustomerViewModel : ViewModelBase
     {
-        private ObservableCollection<Customer> _list;
-        public ObservableCollection<Customer> List { get => _list; set { _list = value; OnPropertyChanged(); } }
+        private ObservableCollection<Customer> _listCustomer;
+        public ObservableCollection<Customer> ListCustomer { get => _listCustomer; set { _listCustomer = value; OnPropertyChanged(); } }
 
         private Customer _selectedItem;
         public Customer SelectedItem
@@ -25,6 +25,7 @@ namespace ManagementDelivery.App.ViewModel
                     Phone = SelectedItem.Phone;
                     Address = SelectedItem.Address;
                     MoreInfo = SelectedItem.MoreInfo;
+                    Note = SelectedItem.Note;
                 }
             }
         }
@@ -49,10 +50,12 @@ namespace ManagementDelivery.App.ViewModel
         public ICommand AddCommand { get; set; }
         public ICommand EditCommand { get; set; }
         public ICommand DeleteCommand { get; set; }
+        public ICommand ClearCommand { get; set; }
+        public ICommand RefreshCommand { get; set; }
 
         public CustomerViewModel()
         {
-            List = new ObservableCollection<Customer>(DataProvider.Ins.DB.Customers.Where(x => !x.IsDelete));
+            ListCustomer = new ObservableCollection<Customer>(DataProvider.Ins.DB.Customers.Where(x => !x.IsDelete).OrderByDescending(x => x.UpdateAt));
 
             AddCommand = new RelayCommand<object>((p) => true, (p) =>
             {
@@ -69,7 +72,7 @@ namespace ManagementDelivery.App.ViewModel
                 DataProvider.Ins.DB.Customers.Add(customer);
                 DataProvider.Ins.DB.SaveChanges();
 
-                List.Add(customer);
+                ListCustomer.Add(customer);
             });
 
             EditCommand = new RelayCommand<object>((p) =>
@@ -101,11 +104,30 @@ namespace ManagementDelivery.App.ViewModel
                 {
                     DataProvider.Ins.DB.Customers.Remove(customer);
                     DataProvider.Ins.DB.SaveChanges();
-                    List.Remove(customer);
+                    ListCustomer.Remove(customer);
                 }
 
                 SelectedItem = null;
             });
+
+
+            ClearCommand = new RelayCommand<object>((p) => !string.IsNullOrEmpty(Name) || !string.IsNullOrEmpty(Phone) || !string.IsNullOrEmpty(Address) || !string.IsNullOrEmpty(MoreInfo) || !string.IsNullOrEmpty(Note), (p) =>
+                {
+                    SelectedItem = null;
+                    Name = null;
+                    Phone = null;
+                    Address = null;
+                    MoreInfo = null;
+                    Note = null;
+                }
+            );
+
+            RefreshCommand = new RelayCommand<object>((p) => true,
+                (p) =>
+                {
+                    ListCustomer = new ObservableCollection<Customer>(DataProvider.Ins.DB.Customers.Where(x => !x.IsDelete).OrderByDescending(x => x.UpdateAt));
+                }
+            );
         }
     }
 }

@@ -19,7 +19,7 @@
         WindowStartupLocation="CenterScreen"
         x:Name="window"
         DataContext="{StaticResource ProductVM}"
-        Title="ProductWindow" Height="450" Width="800">
+        Title="Quản lí sản phẩm" Height="450" Width="800">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"></RowDefinition>
@@ -44,11 +44,13 @@
                         materialDesign:HintAssist.Hint="Tên loại"
                         Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                         DisplayMemberPath="Name"
-                        SelectedValue="{Binding SelectedItemCategory, Mode=TwoWay}">
+                        SelectedItem="{Binding SelectedItemCategory, Mode=TwoWay}">
                     </ComboBox>
                     <TextBox Text="{Binding Price, UpdateSourceTrigger=PropertyChanged}" Margin="5 5 15 5" materialDesign:HintAssist.Hint="Giá bán" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
                     <TextBox Text="{Binding PurchasePrice, UpdateSourceTrigger=PropertyChanged}" Margin="5 5 15 5" materialDesign:HintAssist.Hint="Giá mua" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
                     <TextBox Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}" Margin="5 5 15 5" materialDesign:HintAssist.Hint="Mô tả" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                    
+                    <Button Command="{Binding ClearCommand}" Content="Clear" Margin="5" Width="100"></Button>
                 </WrapPanel>
             </materialDesign:Card>
 
@@ -57,12 +59,14 @@
                     <Button Command="{Binding AddCommand}" Content="Thêm" Margin="5" Width="100"></Button>
                     <Button Command="{Binding EditCommand}" Content="Sửa" Margin="5" Width="100"></Button>
                     <Button Command="{Binding DeleteCommand}" Content="Xóa" Margin="5" Width="100"></Button>
+                    
+                    <Button Command="{Binding RefreshCommand}" Content="Làm mới" Margin="5" Width="100"></Button>
                 </WrapPanel>
             </materialDesign:Card>
 
             <materialDesign:Card Grid.Row="2" Margin="5" VerticalAlignment="Stretch">
                 <ScrollViewer VerticalScrollBarVisibility="Auto">
-                    <ListView ItemsSource="{Binding List}" SelectedItem="{Binding SelectedItem, Mode=OneWayToSource}">
+                    <ListView ItemsSource="{Binding ListProduct}" SelectedItem="{Binding SelectedItem, Mode=OneWayToSource}">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="Tên thức ăn" DisplayMemberBinding="{Binding Name}"></GridViewColumn>

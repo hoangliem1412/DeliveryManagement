@@ -11,8 +11,8 @@ namespace ManagementDelivery.App.ViewModel
 {
     public class ProductViewModel : ViewModelBase
     {
-        private ObservableCollection<Product> _list;
-        public ObservableCollection<Product> List { get => _list; set { _list = value; OnPropertyChanged(); } }
+        private ObservableCollection<Product> _listProduct;
+        public ObservableCollection<Product> ListProduct { get => _listProduct; set { _listProduct = value; OnPropertyChanged(); } }
 
         private ObservableCollection<ProductCategory> _listCategories;
         public ObservableCollection<ProductCategory> ListCategory { get => _listCategories; set { _listCategories = value; OnPropertyChanged(); } }
@@ -28,11 +28,10 @@ namespace ManagementDelivery.App.ViewModel
                 if (SelectedItem != null)
                 {
                     Name = SelectedItem.Name;
-                    CategoryName = SelectedItem.Category.Name;
-                    SelectedItemCategory = SelectedItem.Category;
                     Price = SelectedItem.Price;
                     PurchasePrice = SelectedItem.PurchasePrice;
                     Description = SelectedItem.Description;
+                    SelectedItemCategory = SelectedItem.Category;
                 }
             }
         }
@@ -50,33 +49,64 @@ namespace ManagementDelivery.App.ViewModel
             }
         }
         
-        public int CategoryId { get; set; }
+        private int CategoryId { get; set; }
 
         private string _name;
-        public string Name { get; set; }
-
-        private string _categoryName;
-        public string CategoryName { get; set; }
+        public string Name
+        {
+            get => _name;
+            set
+            {
+                _name = value;
+                OnPropertyChanged();
+            }
+        }
 
         private decimal _price;
-        public decimal? Price { get; set; }
+        public decimal Price
+        {
+            get => _price;
+            set
+            {
+                _price = value;
+                OnPropertyChanged();
+            }
+        }
 
-        private decimal _purchasePrice;
-        public decimal? PurchasePrice { get; set; }
+        private decimal? _purchasePrice;
+        public decimal? PurchasePrice
+        {
+            get => _purchasePrice;
+            set
+            {
+                _purchasePrice = value;
+                OnPropertyChanged();
+            }
+        }
 
         private string _description;
-        public string Description { get; set; }
+        public string Description
+        {
+            get => _description;
+            set
+            {
+                _description = value;
+                OnPropertyChanged();
+            }
+        }
 
         public ICommand AddCommand { get; set; }
         public ICommand EditCommand { get; set; }
         public ICommand DeleteCommand { get; set; }
+        public ICommand ClearCommand { get; set; }
+        public ICommand RefreshCommand { get; set; }
 
         public ProductViewModel()
         {
-            List = new ObservableCollection<Product>(DataProvider.Ins.DB.Products.Where(x => !x.IsDelete));
-            ListCategory = new ObservableCollection<ProductCategory>(DataProvider.Ins.DB.Categories.Where(x => !x.IsDelete));
+            ListProduct = new ObservableCollection<Product>(DataProvider.Ins.DB.Products.Where(x => !x.IsDelete).OrderByDescending(x => x.UpdateAt));
+            ListCategory = new ObservableCollection<ProductCategory>(DataProvider.Ins.DB.Categories.Where(x => !x.IsDelete).OrderByDescending(x => x.UpdateAt));
 
-            AddCommand = new RelayCommand<object>((p) => true, (p) =>
+            AddCommand = new RelayCommand<object>((p) => !string.IsNullOrEmpty(Name), (p) =>
             {
                 var product = new Product()
                 {
@@ -92,7 +122,7 @@ namespace ManagementDelivery.App.ViewModel
                 DataProvider.Ins.DB.Products.Add(product);
                 DataProvider.Ins.DB.SaveChanges();
 
-                List.Add(product);
+                ListProduct.Insert(0, product);
             });
 
             EditCommand = new RelayCommand<object>((p) =>
@@ -124,11 +154,29 @@ namespace ManagementDelivery.App.ViewModel
                 {
                     product.IsDelete = true;
                     DataProvider.Ins.DB.SaveChanges();
-                    List.Remove(product);
+                    ListProduct.Remove(product);
                 }
 
                 SelectedItem = null;
             });
+
+            ClearCommand = new RelayCommand<object> ((p) => SelectedItemCategory != null || !string.IsNullOrEmpty(Name) || Price <= 0 || PurchasePrice.HasValue || !string.IsNullOrEmpty(Description), (p) =>
+                {
+                    SelectedItem = null;
+                    SelectedItemCategory = null;
+                    Name = string.Empty;
+                    Price = 0;
+                    PurchasePrice = null;
+                    Description = string.Empty;
+                }
+            );
+
+            RefreshCommand = new RelayCommand<object> ((p) => true, 
+                (p) =>
+                {
+                    ListProduct = new ObservableCollection<Product>(DataProvider.Ins.DB.Products.Where(x => !x.IsDelete).OrderByDescending(x => x.UpdateAt));
+                }
+            );
         }
     }
 }

@@ -19,7 +19,7 @@
         WindowStartupLocation="CenterScreen"
         x:Name="window"
         DataContext="{StaticResource SupplierVM}"
-        Title="DriverWindow" Height="450" Width="800">
+        Title="Quản lí nhà cung cấp" Height="450" Width="800">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"></RowDefinition>
@@ -44,6 +44,8 @@
                     <TextBox Text="{Binding Phone, UpdateSourceTrigger=PropertyChanged}" Margin="5 5 15 5" materialDesign:HintAssist.Hint="Điện thoại" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
                     <TextBox Text="{Binding MoreInfo, UpdateSourceTrigger=PropertyChanged}" Margin="5 5 15 5" materialDesign:HintAssist.Hint="Thông tin thêm" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
                     <TextBox Text="{Binding Note, UpdateSourceTrigger=PropertyChanged}" Margin="5 5 15 5" materialDesign:HintAssist.Hint="Ghi chú" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+
+                    <Button Command="{Binding ClearCommand}" Content="Clear" Margin="5" Width="100"></Button>
                 </WrapPanel>
             </materialDesign:Card>
 
@@ -52,6 +54,8 @@
                     <Button Command="{Binding AddCommand}" Content="Thêm" Margin="5" Width="100"></Button>
                     <Button Command="{Binding EditCommand}" Content="Sửa" Margin="5" Width="100"></Button>
                     <Button Command="{Binding DeleteCommand}" Content="Xóa" Margin="5" Width="100"></Button>
+                    
+                    <Button Command="{Binding RefreshCommand}" Content="Làm mới" Margin="5" Width="100"></Button>
                 </WrapPanel>
             </materialDesign:Card>
 

@@ -76,14 +76,21 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Common\EnumList.cs" />
     <Compile Include="MyUserControl\ControlBarUC.xaml.cs">
       <DependentUpon>ControlBarUC.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ScreenView\CategoryWindow.xaml.cs">
-      <DependentUpon>CategoryWindow.xaml</DependentUpon>
+    <Compile Include="ScreenView\GoodsReceiptWindow.xaml.cs">
+      <DependentUpon>GoodsReceiptWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ScreenView\ProductCategoryWindow.xaml.cs">
+      <DependentUpon>ProductCategoryWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="ScreenView\CustomerWindow.xaml.cs">
       <DependentUpon>CustomerWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ScreenView\DeliveryWindow.xaml.cs">
+      <DependentUpon>DeliveryWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="ScreenView\DriverWindow.xaml.cs">
       <DependentUpon>DriverWindow.xaml</DependentUpon>
@@ -91,15 +98,21 @@
     <Compile Include="ScreenView\ProductWindow.xaml.cs">
       <DependentUpon>ProductWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ScreenView\StockWindow.xaml.cs">
+      <DependentUpon>StockWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ScreenView\SupplierWindow.xaml.cs">
       <DependentUpon>SupplierWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModel\CategoryViewModel.cs" />
+    <Compile Include="ViewModel\DeliveryViewModel.cs" />
+    <Compile Include="ViewModel\GoodsReceiptViewModel.cs" />
+    <Compile Include="ViewModel\ProductCategoryViewModel.cs" />
     <Compile Include="ViewModel\ControlBarViewModel.cs" />
     <Compile Include="ViewModel\CustomerViewModel.cs" />
     <Compile Include="ViewModel\DriverViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\ProductViewModel.cs" />
+    <Compile Include="ViewModel\StockViewModel.cs" />
     <Compile Include="ViewModel\SupplierViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <Page Include="MainWindow.xaml">
@@ -122,11 +135,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ScreenView\CategoryWindow.xaml">
+    <Page Include="ScreenView\GoodsReceiptWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ScreenView\ProductCategoryWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ScreenView\CustomerWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ScreenView\DeliveryWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -135,6 +156,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ScreenView\ProductWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ScreenView\StockWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

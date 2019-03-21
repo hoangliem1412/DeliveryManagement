@@ -17,9 +17,9 @@ namespace ManagementDelivery.App.ScreenView
     /// <summary>
     /// Interaction logic for CategoryWindow.xaml
     /// </summary>
-    public partial class CategoryWindow : Window
+    public partial class ProductCategoryWindow : Window
     {
-        public CategoryWindow()
+        public ProductCategoryWindow()
         {
             InitializeComponent();
         }

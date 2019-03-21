@@ -61,28 +61,28 @@
                         <ColumnDefinition></ColumnDefinition>
                         <ColumnDefinition></ColumnDefinition>
                     </Grid.ColumnDefinitions>
-                    <Button Command="{Binding InputCommand}" Grid.Column="0" ToolTip="Nhập kho">
+                    <Button Command="{Binding DeliveryCommand}" Grid.Column="0" ToolTip="Giao hàng">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition></RowDefinition>
                                 <RowDefinition></RowDefinition>
                             </Grid.RowDefinitions>
                             <Grid Grid.Row="0">
-                                <TextBlock Text="Nhập kho" HorizontalAlignment="Center"></TextBlock>
+                                <TextBlock Text="Giao hàng" HorizontalAlignment="Center"></TextBlock>
                             </Grid>
                             <Grid Grid.Row="1">
                                 <materialDesign:PackIcon HorizontalAlignment="Center" Width="24" Height="24"  Kind="ArrowDownBoldCircleOutline" />
                             </Grid>
                         </Grid>
                     </Button>
-                    <Button Command="{Binding OutputCommand}" Grid.Column="1" ToolTip="Nhà cung cấp">
+                    <Button Command="{Binding StockCommand}" Grid.Column="1" ToolTip="Kho">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition></RowDefinition>
                                 <RowDefinition></RowDefinition>
                             </Grid.RowDefinitions>
                             <Grid Grid.Row="0">
-                                <TextBlock Text="Nhà cung cấp" HorizontalAlignment="Center"></TextBlock>
+                                <TextBlock Text="Kho" HorizontalAlignment="Center"></TextBlock>
                             </Grid>
                             <Grid Grid.Row="1">
                                 <materialDesign:PackIcon Width="24" Height="24"  HorizontalAlignment="Center"  Kind="ArrowUpBoldCircleOutline" />
@@ -103,19 +103,20 @@
                             </Grid>
                         </Grid>
                     </Button>
-                    <Button Grid.Column="3" Command="{Binding DriverCommand}" ToolTip="Người giao hàng">
+                    <Button Grid.Column="3" Command="{Binding ProductCategoryCommand}" ToolTip="Người giao hàng">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition></RowDefinition>
                                 <RowDefinition></RowDefinition>
                             </Grid.RowDefinitions>
                             <Grid Grid.Row="0">
-                                <TextBlock Text="Người giao hàng" HorizontalAlignment="Center"></TextBlock>
+                                <TextBlock Text="Loại sản phẩm" HorizontalAlignment="Center"></TextBlock>
                             </Grid>
                             <Grid Grid.Row="1">
-                                <materialDesign:PackIcon Width="24" Height="24"  HorizontalAlignment="Center"  Kind="Altimeter" />
+                                <materialDesign:PackIcon Width="24" Height="24"  HorizontalAlignment="Center"  Kind="AccountMultiple" />
                             </Grid>
                         </Grid>
+                        
                     </Button>
                     <Button Grid.Column="4" Command="{Binding SupplierCommand}" ToolTip="Nhà cung cấp">
                         <Grid>
@@ -145,17 +146,17 @@
                             </Grid>
                         </Grid>
                     </Button>
-                    <Button Grid.Column="6" Command="{Binding CategoryCommand}" ToolTip="Loại sản phẩm">
+                    <Button Grid.Column="6" Command="{Binding DriverCommand}" ToolTip="Loại sản phẩm">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition></RowDefinition>
                                 <RowDefinition></RowDefinition>
                             </Grid.RowDefinitions>
                             <Grid Grid.Row="0">
-                                <TextBlock Text="Loại sản phẩm" HorizontalAlignment="Center"></TextBlock>
+                                <TextBlock Text="Người giao hàng" HorizontalAlignment="Center"></TextBlock>
                             </Grid>
                             <Grid Grid.Row="1">
-                                <materialDesign:PackIcon Width="24" Height="24"  HorizontalAlignment="Center"  Kind="AccountMultiple" />
+                                <materialDesign:PackIcon Width="24" Height="24"  HorizontalAlignment="Center"  Kind="Altimeter" />
                             </Grid>
                         </Grid>
                     </Button>
@@ -175,33 +176,12 @@
                         <Grid Grid.Row="0">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="auto"></RowDefinition>
-                                <RowDefinition Height="auto"></RowDefinition>
                                 <RowDefinition></RowDefinition>
                             </Grid.RowDefinitions>
-                            <Grid Grid.Row="0" Margin="5">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="auto"></ColumnDefinition>
-                                    <ColumnDefinition Width="auto"></ColumnDefinition>
-                                    <ColumnDefinition Width="auto"></ColumnDefinition>
-                                </Grid.ColumnDefinitions>
-
-                                <Grid Grid.Column="0">
-                                    <DatePicker VerticalAlignment="Center" HorizontalAlignment="Left" Width="100" materialDesign:HintAssist.Hint="Ngày bắt đầu" Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
-                                </Grid>
-                                <Grid Grid.Column="1">
-                                    <DatePicker VerticalAlignment="Center" HorizontalAlignment="Left" Width="100" materialDesign:HintAssist.Hint="Ngày kết thúc" Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
-                                </Grid>
-                                <Grid Grid.Column="2">
-                                    <Button Style="{StaticResource MaterialDesignRaisedButton}" Margin="5"
-                                            Width="100"
-                                            Content="Lọc"
-                                            ToolTip="Resource name: MaterialDesignRaisedButton"></Button>
-                                </Grid>
-                            </Grid>
-                            <Grid Grid.Row="1">
+                            <Grid Grid.Row="0">
                                 <Separator Margin="5"></Separator>
                             </Grid>
-                            <Grid Grid.Row="2">
+                            <Grid Grid.Row="1">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="auto"></ColumnDefinition>
                                     <ColumnDefinition Width="auto"></ColumnDefinition>
@@ -226,7 +206,7 @@
                                             <Separator Grid.Row="1" Style="{StaticResource MaterialDesignLightSeparator}" />
                                             <TextBlock Grid.Row="2" Margin="16 0 16 8" VerticalAlignment="Center" 
                                                        HorizontalAlignment="Left"      
-                                                       Text="998568"
+                                                       Text="{Binding InputQuantity}"
                                                        Style="{StaticResource MaterialDesignDisplay1TextBlock}">
                                             </TextBlock>
                                             <materialDesign:PopupBox HorizontalAlignment="Right" Padding="2 0 2 0">
@@ -256,7 +236,7 @@
                                             <Separator Grid.Row="1" Style="{StaticResource MaterialDesignLightSeparator}" />
                                             <TextBlock Grid.Row="2" Margin="16 0 16 8" VerticalAlignment="Center" 
                                                        HorizontalAlignment="Left"      
-                                                       Text="998568"
+                                                       Text="{Binding OutputQuantity, Mode=TwoWay}"
                                                        Style="{StaticResource MaterialDesignDisplay1TextBlock}">
                                             </TextBlock>
                                             <materialDesign:PopupBox HorizontalAlignment="Right" Padding="2 0 2 0">
@@ -286,7 +266,7 @@
                                             <Separator Grid.Row="1" Style="{StaticResource MaterialDesignLightSeparator}" />
                                             <TextBlock Grid.Row="2" Margin="16 0 16 8" VerticalAlignment="Center" 
                                                        HorizontalAlignment="Left"      
-                                                       Text="998568"
+                                                       Text="{Binding Inventory}"
                                                        Style="{StaticResource MaterialDesignDisplay1TextBlock}">
                                             </TextBlock>
                                             <materialDesign:PopupBox HorizontalAlignment="Right" Padding="2 0 2 0">
@@ -316,6 +296,7 @@
                                 <ColumnDefinition Width="auto"></ColumnDefinition>
                                 <ColumnDefinition Width="auto"></ColumnDefinition>
                                 <ColumnDefinition Width="auto"></ColumnDefinition>
+                                <ColumnDefinition Width="auto"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
 
                             <Grid Grid.Column="0">
@@ -330,26 +311,37 @@
                                             Content="Lọc"
                                             ToolTip="Resource name: MaterialDesignRaisedButton"></Button>
                             </Grid>
+                            <Grid Grid.Column="3">
+                                <Button Command="{Binding AddDeliveryCommand}" Style="{StaticResource MaterialDesignRaisedButton}" Margin="5"
+                                        Width="auto"
+                                        Content="Thêm đơn hàng"
+                                        ToolTip="Resource name: MaterialDesignRaisedButton"></Button>
+                            </Grid>
                         </Grid>
 
                         <Grid Grid.Row="1">
                             <Separator></Separator>
                         </Grid>
-                        <Grid Grid.Row="2">
-                            <ListView ItemsSource="{Binding DeliveryList}">
-                                <ListView.View>
-                                    <GridView>
-                                        <GridViewColumn Header="STT" DisplayMemberBinding="{Binding STT}"></GridViewColumn>
-                                        <GridViewColumn Header="Khách hàng" DisplayMemberBinding="{Binding Customer.Name}"></GridViewColumn>
-                                        <GridViewColumn Header="Tổng tiền" DisplayMemberBinding="{Binding TotalPrice}"></GridViewColumn>
-                                        <GridViewColumn Header="Ngày giao hàng" DisplayMemberBinding="{Binding DeliveryDate}"></GridViewColumn>
-                                    </GridView>
-                                </ListView.View>
-                            </ListView>
-                        </Grid>
+
+                        <ListView Grid.Row="2" ItemsSource="{Binding ListDelivery}" SelectedItem="{Binding SelectedItem, Mode=OneWayToSource}" x:Name="ListViewDelivery">
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn Header="STT" DisplayMemberBinding="{Binding Id}"></GridViewColumn>
+                                    <GridViewColumn Header="Khách hàng" DisplayMemberBinding="{Binding Customer.Name}"></GridViewColumn>
+                                    <GridViewColumn Header="Tổng tiền" DisplayMemberBinding="{Binding TotalPrice}"></GridViewColumn>
+                                    <GridViewColumn Header="Ngày giao hàng" DisplayMemberBinding="{Binding DeliveryDate}"></GridViewColumn>
+                                    <GridViewColumn Width="200">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Button Command="{Binding Path=DataContext.EditDeliveryCommand, ElementName=ListViewDelivery}" Content="Chi tiết" CommandParameter="{Binding }"/>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
                     </Grid>
                 </materialDesign:Card>
-
             </Grid>
         </Grid>
     </Grid>
