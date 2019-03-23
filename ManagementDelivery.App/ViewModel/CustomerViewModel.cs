@@ -1,7 +1,9 @@
 ﻿using System;
 using ManagementDelivery.Model;
 using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Windows;
 using System.Windows.Input;
 
 namespace ManagementDelivery.App.ViewModel
@@ -31,6 +33,7 @@ namespace ManagementDelivery.App.ViewModel
         }
 
         private string _name;
+        [Required]
         public string Name { get => _name; set { _name = value; OnPropertyChanged(); } }
 
 
@@ -38,6 +41,7 @@ namespace ManagementDelivery.App.ViewModel
         public string Address { get => _address; set { _address = value; OnPropertyChanged(); } }
 
         private string _phone;
+        [RegularExpression(@"^\d$")]
         public string Phone { get => _phone; set { _phone = value; OnPropertyChanged(); } }
 
 
@@ -99,7 +103,12 @@ namespace ManagementDelivery.App.ViewModel
                 return SelectedItem != null && DataProvider.Ins.DB.Customers.Any(x => x.Id == SelectedItem.Id);
             }, (p) =>
             {
-                var customer = DataProvider.Ins.DB.Customers.FirstOrDefault(x => x.Id == SelectedItem.Id);
+                MessageBoxResult messageBoxResult = MessageBox.Show("Bạn chắc chắn muốn xóa?", "Xác nhận", MessageBoxButton.YesNo);
+                if (messageBoxResult != MessageBoxResult.Yes)
+                {
+                    return;
+                }
+                    var customer = DataProvider.Ins.DB.Customers.FirstOrDefault(x => x.Id == SelectedItem.Id);
                 if (customer != null)
                 {
                     DataProvider.Ins.DB.Customers.Remove(customer);

@@ -75,10 +75,14 @@
                               DisplayMemberPath="Name"
                               SelectedItem="{Binding SelectedItemDriver, Mode=TwoWay}">
                     </ComboBox>
-                    <TextBox Text="{Binding Quantity, UpdateSourceTrigger=PropertyChanged}" Margin="5 5 15 5" materialDesign:HintAssist.Hint="Số lượng" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-                    <TextBox Text="{Binding Price, UpdateSourceTrigger=PropertyChanged}" Margin="5 5 15 5" materialDesign:HintAssist.Hint="Giá" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-                    <TextBox Text="{Binding Status, UpdateSourceTrigger=PropertyChanged}" Margin="5 5 15 5" materialDesign:HintAssist.Hint="Trạng thái" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-
+                    <TextBox Text="{Binding Quantity, UpdateSourceTrigger=PropertyChanged}" Margin="5 5 15 5" materialDesign:HintAssist.Hint="Số lượng" Style="{StaticResource MaterialDesignFloatingHintTextBox}" PreviewTextInput="NumberValidationTextBox" />
+                    <TextBox Text="{Binding Price, UpdateSourceTrigger=PropertyChanged}" Margin="5 5 15 5" materialDesign:HintAssist.Hint="Giá" Style="{StaticResource MaterialDesignFloatingHintTextBox}" PreviewTextInput="NumberValidationTextBox"/>
+                    <ComboBox ItemsSource="{Binding ListStatusEnum}"
+                              materialDesign:HintAssist.Hint="Trạng thái"
+                              Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                             
+                              SelectedItem="{Binding SelectedItemStatus, Mode=TwoWay}">
+                    </ComboBox>
                     <Button Command="{Binding ClearDetailCommand}" Content="Clear" Margin="5" Width="100"></Button>
                 </WrapPanel>
             </materialDesign:Card>

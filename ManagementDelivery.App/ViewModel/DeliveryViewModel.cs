@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using ManagementDelivery.App.Common;
 using ManagementDelivery.Model;
 
 namespace ManagementDelivery.App.ViewModel
@@ -14,7 +15,6 @@ namespace ManagementDelivery.App.ViewModel
     public class DeliveryViewModel : ViewModelBase
     {
         private Delivery _delivery;
-
         public Delivery Delivery
         {
             get => _delivery;
@@ -34,7 +34,6 @@ namespace ManagementDelivery.App.ViewModel
         }
 
         private ObservableCollection<DeliveryDetail> _listDeliveryDetail;
-
         public ObservableCollection<DeliveryDetail> ListDeliveryDetail
         {
             get => _listDeliveryDetail;
@@ -43,6 +42,22 @@ namespace ManagementDelivery.App.ViewModel
                 _listDeliveryDetail = value;
                 OnPropertyChanged();
                 OnPropertyChanged("TotalPrice");
+            }
+        }
+
+        public IEnumerable<StatusDelivery> ListStatusEnum => Enum.GetValues(typeof(StatusDelivery)).Cast<StatusDelivery>();
+
+        private StatusDelivery _selectedItemStatus;
+
+        public StatusDelivery SelectedItemStatus
+        {
+            get => _selectedItemStatus;
+            set
+            {
+                _selectedItemStatus = value;
+                OnPropertyChanged();
+                Status = (int)value;
+
             }
         }
 
@@ -69,7 +84,7 @@ namespace ManagementDelivery.App.ViewModel
                     SelectedItemDriver = SelectedItem.Driver;
                     Quantity = SelectedItem.Quantity;
                     Price = SelectedItem.Price;
-                    Status = SelectedItem.Status;
+                    SelectedItemStatus = (StatusDelivery)SelectedItem.Status;
                 }
             }
         }
@@ -169,12 +184,7 @@ namespace ManagementDelivery.App.ViewModel
             }
         }
 
-        private decimal _totalPrice;
-
-        public decimal TotalPrice
-        {
-            get => ListDeliveryDetail?.Sum(x => x.Quantity * x.Price) ?? 0;
-        }
+        public decimal TotalPrice => ListDeliveryDetail?.Sum(x => x.Quantity * x.Price) ?? 0;
 
         public ICommand AddCommand { get; set; }
         public ICommand AddDetailCommand { get; set; }
@@ -235,6 +245,7 @@ namespace ManagementDelivery.App.ViewModel
                     Driver = SelectedItemDriver,
                     Quantity = Quantity,
                     Price = Price,
+                    Status = Status,
                     InsertAt = DateTime.Now,
                     UpdateAt = DateTime.Now
                 };
@@ -262,6 +273,12 @@ namespace ManagementDelivery.App.ViewModel
 
             DeleteDetailCommand = new RelayCommand<object>((p) => SelectedItem != null && SelectedItemProduct != null && SelectedItemDriver != null && Price > 0 && Quantity > 0, (p) =>
             {
+                MessageBoxResult messageBoxResult = MessageBox.Show("Bạn chắc chắn muốn xóa?", "Xác nhận", MessageBoxButton.YesNo);
+                if (messageBoxResult != MessageBoxResult.Yes)
+                {
+                    return;
+                }
+
                 var delivery = ListDeliveryDetail.FirstOrDefault(x => x.Id == SelectedItem.Id);
                 ListDeliveryDetail.Remove(delivery);
 

@@ -15,7 +15,6 @@ namespace ManagementDelivery.Model
             Deliveries = new HashSet<Delivery>();
         }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
         [Required]

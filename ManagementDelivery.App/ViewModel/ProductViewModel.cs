@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using ManagementDelivery.Model;
 
@@ -149,6 +150,12 @@ namespace ManagementDelivery.App.ViewModel
                 return SelectedItem != null && DataProvider.Ins.DB.Products.Any(x => x.Id == SelectedItem.Id);
             }, (p) =>
             {
+                MessageBoxResult messageBoxResult = MessageBox.Show("Bạn chắc chắn muốn xóa?", "Xác nhận", MessageBoxButton.YesNo);
+                if (messageBoxResult != MessageBoxResult.Yes)
+                {
+                    return;
+                }
+
                 var product = DataProvider.Ins.DB.Products.FirstOrDefault(x => x.Id == SelectedItem.Id);
                 if (product != null)
                 {
