@@ -6,8 +6,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
-using ManagementDelivery.App.ScreenView;
-using ManagementDelivery.Model;
+using ManagementDelivery.App.Core;
+using ManagementDelivery.App.Model;
+using ManagementDelivery.App.View;
 
 namespace ManagementDelivery.App.ViewModel
 {
@@ -81,7 +82,16 @@ namespace ManagementDelivery.App.ViewModel
         
         public MainViewModel()
         {
-            ListDelivery = new ObservableCollection<Delivery>(DataProvider.Ins.DB.Deliveries.Where(x => !x.IsDelete).OrderByDescending(x => x.UpdateAt));
+            try
+            {
+                ListDelivery = new ObservableCollection<Delivery>(DataProvider.Ins.DB.Deliveries.Where(x => !x.IsDelete).OrderByDescending(x => x.UpdateAt));
+
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+                throw;
+            }
 
             OutputQuantity = DataProvider.Ins.DB.DeliveryDetails.Where(x => x.Delivery.DeliveryDate.Month == DateTime.Now.Month).Select(x => x.Quantity).DefaultIfEmpty(0).Sum();
 

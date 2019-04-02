@@ -6,7 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Input;
-using ManagementDelivery.Model;
+using ManagementDelivery.App.Core;
+using ManagementDelivery.App.Model;
 
 namespace ManagementDelivery.App.ViewModel
 {
@@ -134,6 +135,24 @@ namespace ManagementDelivery.App.ViewModel
                     InsertAt = DateTime.Now,
                     UpdateAt = DateTime.Now
                 };
+
+                Stock stock = DataProvider.Ins.DB.Stocks.FirstOrDefault(x => x.ProductId == ProductId && !x.IsDelete);
+                if (stock == null)
+                {
+                    stock = new Stock()
+                    {
+                        ProductId = ProductId,
+                        Quantity = Quantity,
+                        InsertAt = DateTime.Now,
+                        UpdateAt = DateTime.Now,
+                        IsDelete = false
+                    };
+                    DataProvider.Ins.DB.Stocks.Add(stock);
+                }
+                else
+                {
+                    stock.Quantity += Quantity;
+                }
 
                 DataProvider.Ins.DB.GoodsReceipts.Add(goodsReceipt);
                 DataProvider.Ins.DB.SaveChanges();

@@ -1,10 +1,10 @@
 ﻿using System;
-using ManagementDelivery.Model;
 using System.Collections.ObjectModel;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
+using ManagementDelivery.App.Core;
+using ManagementDelivery.App.Model;
 
 namespace ManagementDelivery.App.ViewModel
 {
@@ -33,7 +33,6 @@ namespace ManagementDelivery.App.ViewModel
         }
 
         private string _name;
-        [Required]
         public string Name { get => _name; set { _name = value; OnPropertyChanged(); } }
 
 
@@ -41,7 +40,6 @@ namespace ManagementDelivery.App.ViewModel
         public string Address { get => _address; set { _address = value; OnPropertyChanged(); } }
 
         private string _phone;
-        [RegularExpression(@"^\d$")]
         public string Phone { get => _phone; set { _phone = value; OnPropertyChanged(); } }
 
 
@@ -81,10 +79,10 @@ namespace ManagementDelivery.App.ViewModel
 
             EditCommand = new RelayCommand<object>((p) =>
             {
-                return SelectedItem != null && DataProvider.Ins.DB.Customers.Any(x => x.Id == SelectedItem.Id);
+                return SelectedItem != null && DataProvider.Ins.DB.Customers.Any(x => x.Id == SelectedItem.Id && !x.IsDelete);
             }, (p) =>
             {
-                var customer = DataProvider.Ins.DB.Customers.FirstOrDefault(x => x.Id == SelectedItem.Id);
+                var customer = DataProvider.Ins.DB.Customers.FirstOrDefault(x => x.Id == SelectedItem.Id && !x.IsDelete);
                 if (customer != null)
                 {
                     customer.Name = Name;
@@ -96,11 +94,15 @@ namespace ManagementDelivery.App.ViewModel
 
                     DataProvider.Ins.DB.SaveChanges();
                 }
+                else
+                {
+                    MessageBox.Show("Not Found. Please again");
+                }
             });
 
             DeleteCommand = new RelayCommand<object>((p) =>
             {
-                return SelectedItem != null && DataProvider.Ins.DB.Customers.Any(x => x.Id == SelectedItem.Id);
+                return SelectedItem != null && DataProvider.Ins.DB.Customers.Any(x => x.Id == SelectedItem.Id && !x.IsDelete);
             }, (p) =>
             {
                 MessageBoxResult messageBoxResult = MessageBox.Show("Bạn chắc chắn muốn xóa?", "Xác nhận", MessageBoxButton.YesNo);
@@ -108,12 +110,16 @@ namespace ManagementDelivery.App.ViewModel
                 {
                     return;
                 }
-                    var customer = DataProvider.Ins.DB.Customers.FirstOrDefault(x => x.Id == SelectedItem.Id);
+                    var customer = DataProvider.Ins.DB.Customers.FirstOrDefault(x => x.Id == SelectedItem.Id && !x.IsDelete);
                 if (customer != null)
                 {
                     DataProvider.Ins.DB.Customers.Remove(customer);
                     DataProvider.Ins.DB.SaveChanges();
                     ListCustomer.Remove(customer);
+                }
+                else
+                {
+                    MessageBox.Show("Not Found. Please again");
                 }
 
                 SelectedItem = null;

@@ -8,7 +8,8 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using ManagementDelivery.App.Common;
-using ManagementDelivery.Model;
+using ManagementDelivery.App.Core;
+using ManagementDelivery.App.Model;
 
 namespace ManagementDelivery.App.ViewModel
 {

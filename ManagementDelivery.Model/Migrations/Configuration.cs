@@ -1,3 +1,5 @@
+using System.IO;
+
 namespace ManagementDelivery.Model.Migrations
 {
     using System;
@@ -10,6 +12,9 @@ namespace ManagementDelivery.Model.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
+            string executable = System.Reflection.Assembly.GetExecutingAssembly().Location;
+            string path = (System.IO.Path.GetDirectoryName(executable));
+            AppDomain.CurrentDomain.SetData("DataDirectory", path);
         }
 
         protected override void Seed(ManagementDelivery.Model.StockManagementDB context)

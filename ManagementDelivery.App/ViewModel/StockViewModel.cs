@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Windows;
 using System.Windows.Input;
-using ManagementDelivery.Model;
+using ManagementDelivery.App.Core;
+using ManagementDelivery.App.Model;
 
 namespace ManagementDelivery.App.ViewModel
 {
@@ -67,6 +69,7 @@ namespace ManagementDelivery.App.ViewModel
 
         public ICommand AddCommand { get; set; }
         public ICommand EditCommand { get; set; }
+        public ICommand DeleteCommand { get; set; }
         public ICommand ClearCommand { get; set; }
         public ICommand RefreshCommand { get; set; }
 
@@ -105,6 +108,27 @@ namespace ManagementDelivery.App.ViewModel
                 }
             });
 
+            DeleteCommand = new RelayCommand<object>((p) =>
+            {
+                return SelectedItem != null && DataProvider.Ins.DB.Stocks.Any(x => x.Id == SelectedItem.Id);
+            }, (p) =>
+            {
+                MessageBoxResult messageBoxResult = MessageBox.Show("Bạn chắc chắn muốn xóa?", "Xác nhận", MessageBoxButton.YesNo);
+                if (messageBoxResult != MessageBoxResult.Yes)
+                {
+                    return;
+                }
+
+                var stock = DataProvider.Ins.DB.Stocks.FirstOrDefault(x => x.Id == SelectedItem.Id);
+                if (stock != null)
+                {
+                    DataProvider.Ins.DB.Stocks.Remove(stock);
+                    DataProvider.Ins.DB.SaveChanges();
+                    List.Remove(stock);
+                }
+
+                SelectedItem = null;
+            });
 
             ClearCommand = new RelayCommand<object>((p) => SelectedItemProduct != null || Quantity >= 0, (p) =>
                 {
