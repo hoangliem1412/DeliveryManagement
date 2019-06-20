@@ -14,11 +14,11 @@ namespace ManagementDelivery.App.Core
         public virtual DbSet<Customer> Customers { get; set; }
         public virtual DbSet<Delivery> Deliveries { get; set; }
         public virtual DbSet<DeliveryDetail> DeliveryDetails { get; set; }
-        public virtual DbSet<Driver> Drivers { get; set; }
+        // public virtual DbSet<Driver> Drivers { get; set; }
         public virtual DbSet<GoodsReceipt> GoodsReceipts { get; set; }
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<Stock> Stocks { get; set; }
-        public virtual DbSet<Supplier> Suppliers { get; set; }
+        // public virtual DbSet<Supplier> Suppliers { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

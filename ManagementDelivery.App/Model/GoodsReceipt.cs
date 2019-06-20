@@ -10,7 +10,7 @@ namespace ManagementDelivery.App.Model
 
         public int ProductId { get; set; }
 
-        public int? SupplierId { get; set; }
+        // public int? SupplierId { get; set; }
 
         public decimal PurchasePrice { get; set; }
 
@@ -20,6 +20,6 @@ namespace ManagementDelivery.App.Model
 
         public virtual Product Product { get; set; }
 
-        public virtual Supplier Supplier { get; set; }
+        // public virtual Supplier Supplier { get; set; }
     }
 }

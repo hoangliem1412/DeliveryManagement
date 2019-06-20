@@ -7,13 +7,13 @@ namespace ManagementDelivery.App.Model
     [Table("Product")]
     public partial class Product : EntityBase
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Product()
-        {
-            DeliveryDetails = new HashSet<DeliveryDetail>();
-            GoodsReceipts = new HashSet<GoodsReceipt>();
-            Stocks = new HashSet<Stock>();
-        }
+        //[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        //public Product()
+        //{
+        //    DeliveryDetails = new HashSet<DeliveryDetail>();
+        //    GoodsReceipts = new HashSet<GoodsReceipt>();
+        //    Stocks = new HashSet<Stock>();
+        //}
 
         public int Id { get; set; }
 
@@ -30,17 +30,15 @@ namespace ManagementDelivery.App.Model
 
         public string Description { get; set; }
 
-        public bool IsDelete { get; set; }
-
         public virtual ProductCategory Category { get; set; }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        //[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DeliveryDetail> DeliveryDetails { get; set; }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        //[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<GoodsReceipt> GoodsReceipts { get; set; }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        //[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Stock> Stocks { get; set; }
     }
 }

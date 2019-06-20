@@ -7,13 +7,13 @@ namespace ManagementDelivery.App.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class init : IMigrationMetadata
+    public sealed partial class deleteDriverIdAndSupplierId : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(init));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(deleteDriverIdAndSupplierId));
         
         string IMigrationMetadata.Id
         {
-            get { return "201903240705067_init"; }
+            get { return "201906201818493_deleteDriverIdAndSupplierId"; }
         }
         
         string IMigrationMetadata.Source

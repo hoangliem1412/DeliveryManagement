@@ -7,5 +7,7 @@ namespace ManagementDelivery.App.Model
         public DateTime InsertAt { get; set; }
 
         public DateTime UpdateAt { get; set; }
+
+        public bool IsDelete { get; set; }
     }
 }

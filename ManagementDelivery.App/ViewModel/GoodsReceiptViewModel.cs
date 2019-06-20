@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using ManagementDelivery.App.Core;
@@ -19,8 +20,8 @@ namespace ManagementDelivery.App.ViewModel
         private ObservableCollection<Product> _listProduct;
         public ObservableCollection<Product> ListProduct { get => _listProduct; set { _listProduct = value; OnPropertyChanged(); } }
 
-        private ObservableCollection<Supplier> _listSupplier;
-        public ObservableCollection<Supplier> ListSupplier { get => _listSupplier; set { _listSupplier = value; OnPropertyChanged(); } }
+        //private ObservableCollection<Supplier> _listSupplier;
+        //public ObservableCollection<Supplier> ListSupplier { get => _listSupplier; set { _listSupplier = value; OnPropertyChanged(); } }
 
         private GoodsReceipt _selectedItem;
         public GoodsReceipt SelectedItem
@@ -36,7 +37,7 @@ namespace ManagementDelivery.App.ViewModel
                     Quantity = SelectedItem.Quantity;
                     DateReceipt = SelectedItem.DateReceipt;
                     SelectedItemProduct = SelectedItem.Product;
-                    SelectedItemSupplier = SelectedItem.Supplier;
+                    // SelectedItemSupplier = SelectedItem.Supplier;
                 }
             }
         }
@@ -58,21 +59,21 @@ namespace ManagementDelivery.App.ViewModel
             }
         }
 
-        private Supplier _selectedItemSupplier;
-        public Supplier SelectedItemSupplier
-        {
-            get => _selectedItemSupplier;
-            set
-            {
-                _selectedItemSupplier = value;
-                OnPropertyChanged();
+        //private Supplier _selectedItemSupplier;
+        //public Supplier SelectedItemSupplier
+        //{
+        //    get => _selectedItemSupplier;
+        //    set
+        //    {
+        //        _selectedItemSupplier = value;
+        //        OnPropertyChanged();
 
-                if (value != null) SupplierId = value.Id;
-            }
-        }
+        //        if (value != null) SupplierId = value.Id;
+        //    }
+        //}
 
         private int ProductId { get; set; }
-        private int SupplierId { get; set; }
+        //private int SupplierId { get; set; }
 
         private decimal _purchasePrice;
         public decimal PurchasePrice
@@ -112,14 +113,15 @@ namespace ManagementDelivery.App.ViewModel
         public ICommand EditCommand { get; set; }
         public ICommand ClearCommand { get; set; }
         public ICommand RefreshCommand { get; set; }
+        public ICommand DeleteCommand { get; set; }
 
         public GoodsReceiptViewModel()
         {
-            List = new ObservableCollection<GoodsReceipt>(DataProvider.Ins.DB.GoodsReceipts.OrderByDescending(x => x.UpdateAt));
+            List = new ObservableCollection<GoodsReceipt>(DataProvider.Ins.DB.GoodsReceipts.Where(x => !x.IsDelete).OrderByDescending(x => x.UpdateAt));
 
             ListProduct = new ObservableCollection<Product>(DataProvider.Ins.DB.Products.Where(x => !x.IsDelete).OrderByDescending(x => x.UpdateAt));
 
-            ListSupplier = new ObservableCollection<Supplier>(DataProvider.Ins.DB.Suppliers.Where(x => !x.IsDelete).OrderByDescending(x => x.UpdateAt));
+            // ListSupplier = new ObservableCollection<Supplier>(DataProvider.Ins.DB.Suppliers.Where(x => !x.IsDelete).OrderByDescending(x => x.UpdateAt));
 
             DateReceipt = DateTime.Now;
 
@@ -128,7 +130,7 @@ namespace ManagementDelivery.App.ViewModel
                 var goodsReceipt = new GoodsReceipt()
                 {
                     ProductId = ProductId,
-                    SupplierId = SupplierId,
+                    // SupplierId = SupplierId,
                     PurchasePrice = PurchasePrice,
                     Quantity = Quantity,
                     DateReceipt = DateReceipt,
@@ -152,6 +154,7 @@ namespace ManagementDelivery.App.ViewModel
                 else
                 {
                     stock.Quantity += Quantity;
+                    stock.UpdateAt = DateTime.Now;
                 }
 
                 DataProvider.Ins.DB.GoodsReceipts.Add(goodsReceipt);
@@ -160,29 +163,74 @@ namespace ManagementDelivery.App.ViewModel
                 List.Insert(0, goodsReceipt);
             });
 
-            EditCommand = new RelayCommand<object>((p) =>
+            EditCommand = new RelayCommand<object>((p) => SelectedItem != null && DataProvider.Ins.DB.GoodsReceipts.Any(x => x.Id == SelectedItem.Id), 
+            (p) =>
             {
-                return SelectedItem != null && DataProvider.Ins.DB.GoodsReceipts.Any(x => x.Id == SelectedItem.Id);
-            }, (p) =>
-            {
+                int quantityOld = SelectedItem.Quantity;
                 var goodsReceipt = DataProvider.Ins.DB.GoodsReceipts.FirstOrDefault(x => x.Id == SelectedItem.Id);
                 if (goodsReceipt != null)
                 {
                     goodsReceipt.PurchasePrice = PurchasePrice;
                     goodsReceipt.Quantity = Quantity;
                     goodsReceipt.DateReceipt = DateReceipt;
-
                     goodsReceipt.UpdateAt = DateTime.Now;
-
-                    DataProvider.Ins.DB.SaveChanges();
                 }
+
+                Stock stock = DataProvider.Ins.DB.Stocks.FirstOrDefault(x => x.ProductId == ProductId && !x.IsDelete);
+                if (stock == null)
+                {
+                    MessageBox.Show("Sản phẩm chưa có trong kho");
+                }
+                else
+                {
+                    stock.Quantity += (Quantity - quantityOld);
+                    stock.UpdateAt = DateTime.Now;
+                }
+
+                DataProvider.Ins.DB.SaveChanges();
             });
 
-            ClearCommand = new RelayCommand<object>((p) => SelectedItemProduct != null || SelectedItemSupplier != null || PurchasePrice != 0 || Quantity != 0, (p) =>
+            DeleteCommand = new RelayCommand<object>((p) => SelectedItem != null && DataProvider.Ins.DB.GoodsReceipts.Any(x => x.Id == SelectedItem.Id), 
+            (p) =>
+            {
+                MessageBoxResult messageBoxResult = MessageBox.Show("Bạn chắc chắn muốn xóa?", "Xác nhận", MessageBoxButton.YesNo);
+                if (messageBoxResult != MessageBoxResult.Yes)
+                {
+                    return;
+                }
+
+                int quantityOld = SelectedItem.Quantity;
+                var goodsReceipt = DataProvider.Ins.DB.GoodsReceipts.FirstOrDefault(x => x.Id == SelectedItem.Id);
+                if (goodsReceipt != null)
+                {
+                    goodsReceipt.IsDelete = true;
+                    goodsReceipt.UpdateAt = DateTime.Now;
+                    List.Remove(goodsReceipt);
+                }
+
+                Stock stock = DataProvider.Ins.DB.Stocks.FirstOrDefault(x => x.ProductId == ProductId && !x.IsDelete);
+                if (stock == null)
+                {
+                    MessageBox.Show("Sản phẩm chưa có trong kho");
+                }
+                else
+                {
+                    stock.Quantity -= quantityOld;
+                    stock.UpdateAt = DateTime.Now;
+                }
+
+                DataProvider.Ins.DB.SaveChanges();
+                SelectedItem = null;
+            });
+
+            ClearCommand = new RelayCommand<object>((p) => SelectedItemProduct != null
+            // || SelectedItemSupplier != null 
+            || PurchasePrice != 0
+            || Quantity != 0, (p) =>
             {
                 SelectedItem = null;
                 SelectedItemProduct = null;
-                SelectedItemSupplier = null;
+                // SelectedItemSupplier = null;
                 PurchasePrice = 0;
                 Quantity = 0;
                 DateReceipt = DateTime.Now;
@@ -192,7 +240,7 @@ namespace ManagementDelivery.App.ViewModel
             RefreshCommand = new RelayCommand<object>((p) => true,
                 (p) =>
                 {
-                    List = new ObservableCollection<GoodsReceipt>(DataProvider.Ins.DB.GoodsReceipts.OrderByDescending(x => x.UpdateAt));
+                    List = new ObservableCollection<GoodsReceipt>(DataProvider.Ins.DB.GoodsReceipts.Where(x => !x.IsDelete).OrderByDescending(x => x.UpdateAt));
                 }
             );
         }

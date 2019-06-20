@@ -115,26 +115,25 @@
     <Compile Include="Common\EnumList.cs" />
     <Compile Include="Core\DataProvider.cs" />
     <Compile Include="Core\StockManagementDB.cs" />
-    <Compile Include="Migrations\201903240705067_init.cs" />
-    <Compile Include="Migrations\201903240705067_init.Designer.cs">
-      <DependentUpon>201903240705067_init.cs</DependentUpon>
+    <Compile Include="Migrations\201906201450221_init.cs" />
+    <Compile Include="Migrations\201906201450221_init.Designer.cs">
+      <DependentUpon>201906201450221_init.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201906201818493_deleteDriverIdAndSupplierId.cs" />
+    <Compile Include="Migrations\201906201818493_deleteDriverIdAndSupplierId.Designer.cs">
+      <DependentUpon>201906201818493_deleteDriverIdAndSupplierId.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\Customer.cs" />
     <Compile Include="Model\Delivery.cs" />
     <Compile Include="Model\DeliveryDetail.cs" />
-    <Compile Include="Model\Driver.cs" />
     <Compile Include="Model\EntityBase.cs" />
     <Compile Include="Model\GoodsReceipt.cs" />
     <Compile Include="Model\Product.cs" />
     <Compile Include="Model\ProductCategory.cs" />
     <Compile Include="Model\Stock.cs" />
-    <Compile Include="Model\Supplier.cs" />
     <Compile Include="MyUserControl\ControlBarUC.xaml.cs">
       <DependentUpon>ControlBarUC.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\DriverWindow.xaml.cs">
-      <DependentUpon>DriverWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\GoodsReceiptWindow.xaml.cs">
       <DependentUpon>GoodsReceiptWindow.xaml</DependentUpon>
@@ -154,11 +153,7 @@
     <Compile Include="View\StockWindow.xaml.cs">
       <DependentUpon>StockWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\SupplierWindow.xaml.cs">
-      <DependentUpon>SupplierWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="ViewModel\DeliveryViewModel.cs" />
-    <Compile Include="ViewModel\DriverViewModel.cs" />
     <Compile Include="ViewModel\GoodsReceiptViewModel.cs" />
     <Compile Include="ViewModel\ProductCategoryViewModel.cs" />
     <Compile Include="ViewModel\ControlBarViewModel.cs" />
@@ -166,7 +161,6 @@
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\ProductViewModel.cs" />
     <Compile Include="ViewModel\StockViewModel.cs" />
-    <Compile Include="ViewModel\SupplierViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -187,10 +181,6 @@
     <Page Include="ResourceScreen\MainResource.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\DriverWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\GoodsReceiptWindow.xaml">
       <SubType>Designer</SubType>
@@ -216,10 +206,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\SupplierWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -235,8 +221,11 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <EmbeddedResource Include="Migrations\201903240705067_init.resx">
-      <DependentUpon>201903240705067_init.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201906201450221_init.resx">
+      <DependentUpon>201906201450221_init.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906201818493_deleteDriverIdAndSupplierId.resx">
+      <DependentUpon>201906201818493_deleteDriverIdAndSupplierId.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

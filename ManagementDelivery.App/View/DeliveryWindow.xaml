@@ -58,6 +58,8 @@
                         Margin="5 5 15 5"
                         MinWidth="72" />
                     <Button Command="{Binding ClearCommand}" Content="Clear" Margin="5" Width="100"></Button>
+                    <Button Command="{Binding AddCommand}" CommandParameter="{Binding ElementName=windowDelivery}" Content="Thêm đợn hàng" Margin="5" Width="150"></Button>
+                    <Button Command="{Binding EditCommand}" CommandParameter="{Binding ElementName=windowDelivery}" Content="Sửa đợn hàng" Margin="5" Width="150"></Button>
                 </WrapPanel>
             </materialDesign:Card>
 
@@ -69,12 +71,12 @@
                               DisplayMemberPath="Name"
                               SelectedItem="{Binding SelectedItemProduct, Mode=TwoWay}">
                     </ComboBox>
-                    <ComboBox ItemsSource="{Binding ListDriver}"
+                    <!--<ComboBox ItemsSource="{Binding ListDriver}"
                               materialDesign:HintAssist.Hint="Tên tài xế"
                               Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                               DisplayMemberPath="Name"
-                              SelectedItem="{Binding SelectedItemDriver, Mode=TwoWay}">
-                    </ComboBox>
+                              SelectedItem="{Binding SelectedItemDriver, Mode=TwoWay}">-->
+                    <!--</ComboBox>-->
                     <TextBox Text="{Binding Quantity, UpdateSourceTrigger=PropertyChanged}" Margin="5 5 15 5" materialDesign:HintAssist.Hint="Số lượng" Style="{StaticResource MaterialDesignFloatingHintTextBox}" PreviewTextInput="NumberValidationTextBox" />
                     <TextBox Text="{Binding Price, UpdateSourceTrigger=PropertyChanged}" Margin="5 5 15 5" materialDesign:HintAssist.Hint="Giá" Style="{StaticResource MaterialDesignFloatingHintTextBox}" PreviewTextInput="NumberValidationTextBox"/>
                     <ComboBox ItemsSource="{Binding ListStatusEnum}"
@@ -89,11 +91,9 @@
 
             <materialDesign:Card Grid.Row="2" Margin="5">
                 <WrapPanel>
-                    <Button Command="{Binding AddCommand}" CommandParameter="{Binding ElementName=windowDelivery}" Content="Thêm đợn hàng" Margin="5" Width="150"></Button>
                     <Button Command="{Binding AddDetailCommand}" Content="Thêm" Margin="5" Width="100"></Button>
                     <Button Command="{Binding EditDetailCommand}" Content="Sửa" Margin="5" Width="100"></Button>
                     <Button Command="{Binding DeleteDetailCommand}" Content="Xóa" Margin="5" Width="100"></Button>
-                    
                     <Button Command="{Binding RefreshCommand}" Content="Làm mới" Margin="5" Width="100"></Button>
                 </WrapPanel>
             </materialDesign:Card>
@@ -104,7 +104,7 @@
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="Tên sản phẩm" DisplayMemberBinding="{Binding Product.Name}"></GridViewColumn>
-                                <GridViewColumn Header="Tên tài xế" DisplayMemberBinding="{Binding Driver.Name}"></GridViewColumn>
+                                <!--<GridViewColumn Header="Tên tài xế" DisplayMemberBinding="{Binding Driver.Name}"></GridViewColumn>-->
                                 <GridViewColumn Header="Số lượng" DisplayMemberBinding="{Binding Quantity}"></GridViewColumn>
                                 <GridViewColumn Header="Giá" DisplayMemberBinding="{Binding Price}"></GridViewColumn>
                                 <GridViewColumn Header="Trạng thái" DisplayMemberBinding="{Binding Status}"></GridViewColumn>

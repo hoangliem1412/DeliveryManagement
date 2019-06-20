@@ -11,8 +11,6 @@ namespace ManagementDelivery.App.Model
 
         public int Quantity { get; set; }
 
-        public bool IsDelete { get; set; }
-
         public virtual Product Product { get; set; }
     }
 }

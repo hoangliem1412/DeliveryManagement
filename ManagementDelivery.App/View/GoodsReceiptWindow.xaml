@@ -45,12 +45,12 @@
                               DisplayMemberPath="Name"
                               SelectedItem="{Binding SelectedItemProduct, Mode=TwoWay}">
                     </ComboBox>
-                    <ComboBox ItemsSource="{Binding ListSupplier}"
+                    <!--<ComboBox ItemsSource="{Binding ListSupplier}"
                         materialDesign:HintAssist.Hint="Tên nhà cung cấp"
                         Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                         DisplayMemberPath="Name"
-                        SelectedItem="{Binding SelectedItemSupplier, Mode=TwoWay}">
-                    </ComboBox>
+                        SelectedItem="{Binding SelectedItemSupplier, Mode=TwoWay}">-->
+                    <!--</ComboBox>-->
                     <TextBox Text="{Binding PurchasePrice, UpdateSourceTrigger=PropertyChanged}" Margin="5 5 15 5" materialDesign:HintAssist.Hint="Giá nhập" Style="{StaticResource MaterialDesignFloatingHintTextBox}" PreviewTextInput="NumberValidationTextBox"/>
                     <TextBox Text="{Binding Quantity, UpdateSourceTrigger=PropertyChanged}" Margin="5 5 15 5" materialDesign:HintAssist.Hint="Số lượng" Style="{StaticResource MaterialDesignFloatingHintTextBox}" PreviewTextInput="NumberValidationTextBox"/>
                     <DatePicker
@@ -66,6 +66,7 @@
                 <WrapPanel>
                     <Button Command="{Binding AddCommand}" Content="Thêm" Margin="5" Width="100"></Button>
                     <Button Command="{Binding EditCommand}" Content="Sửa" Margin="5" Width="100"></Button>
+                    <Button Command="{Binding DeleteCommand}" Content="Xóa" Margin="5" Width="100"></Button>
                     <Button Command="{Binding RefreshCommand}" Content="Làm mới" Margin="5" Width="100"></Button>
                 </WrapPanel>
             </materialDesign:Card>
@@ -76,7 +77,7 @@
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="Tên sản phẩm" DisplayMemberBinding="{Binding Product.Name}"></GridViewColumn>
-                                <GridViewColumn Header="Tên nhà cung cấp" DisplayMemberBinding="{Binding Supplier.Name}"></GridViewColumn>
+                                <!--<GridViewColumn Header="Tên nhà cung cấp" DisplayMemberBinding="{Binding Supplier.Name}"></GridViewColumn>-->
                                 <GridViewColumn Header="Giá nhập" DisplayMemberBinding="{Binding PurchasePrice}"></GridViewColumn>
                                 <GridViewColumn Header="Số lượng" DisplayMemberBinding="{Binding Quantity}"></GridViewColumn>
                                 <GridViewColumn Header="Ngày nhập" DisplayMemberBinding="{Binding DateReceipt}"></GridViewColumn>

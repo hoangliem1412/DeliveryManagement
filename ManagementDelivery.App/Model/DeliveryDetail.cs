@@ -11,7 +11,7 @@ namespace ManagementDelivery.App.Model
 
         public int ProductId { get; set; }
 
-        public int DriverId { get; set; }
+        // public int DriverId { get; set; }
 
         public int Quantity { get; set; }
 
@@ -20,7 +20,7 @@ namespace ManagementDelivery.App.Model
 
         public int Status { get; set; }
 
-        public virtual Driver Driver { get; set; }
+        // public virtual Driver Driver { get; set; }
 
         public virtual Delivery Delivery { get; set; }
 

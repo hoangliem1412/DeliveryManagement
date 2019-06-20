@@ -7,11 +7,11 @@ namespace ManagementDelivery.App.Model
     [Table("ProductCategory")]
     public partial class ProductCategory : EntityBase
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public ProductCategory()
-        {
-            Products = new HashSet<Product>();
-        }
+        //[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        //public ProductCategory()
+        //{
+        //    Products = new HashSet<Product>();
+        //}
 
         public int Id { get; set; }
 
@@ -21,9 +21,7 @@ namespace ManagementDelivery.App.Model
 
         public string Note { get; set; }
 
-        public bool IsDelete { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        // [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Product> Products { get; set; }
     }
 }

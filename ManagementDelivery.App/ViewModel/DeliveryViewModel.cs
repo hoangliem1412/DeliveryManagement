@@ -65,11 +65,11 @@ namespace ManagementDelivery.App.ViewModel
         private ObservableCollection<Customer> _listCustomer;
         public ObservableCollection<Customer> ListCustomer { get => _listCustomer; set { _listCustomer = value; OnPropertyChanged(); } }
 
-        private ObservableCollection<Product> _listProductr;
-        public ObservableCollection<Product> ListProduct { get => _listProductr; set { _listProductr = value; OnPropertyChanged(); } }
+        private ObservableCollection<Product> _listProduct;
+        public ObservableCollection<Product> ListProduct { get => _listProduct; set { _listProduct = value; OnPropertyChanged(); } }
 
-        private ObservableCollection<Driver> _listDriver;
-        public ObservableCollection<Driver> ListDriver { get => _listDriver; set { _listDriver = value; OnPropertyChanged(); } }
+        // private ObservableCollection<Driver> _listDriver;
+        // public ObservableCollection<Driver> ListDriver { get => _listDriver; set { _listDriver = value; OnPropertyChanged(); } }
 
         private DeliveryDetail _selectedItem;
         public DeliveryDetail SelectedItem
@@ -82,7 +82,7 @@ namespace ManagementDelivery.App.ViewModel
                 if (SelectedItem != null)
                 {
                     SelectedItemProduct = SelectedItem.Product;
-                    SelectedItemDriver = SelectedItem.Driver;
+                    // SelectedItemDriver = SelectedItem.Driver;
                     Quantity = SelectedItem.Quantity;
                     Price = SelectedItem.Price;
                     SelectedItemStatus = (StatusDelivery)SelectedItem.Status;
@@ -120,25 +120,25 @@ namespace ManagementDelivery.App.ViewModel
             }
         }
 
-        private Driver _selectedItemDriver;
-        public Driver SelectedItemDriver
-        {
-            get => _selectedItemDriver;
-            set
-            {
-                _selectedItemDriver = value;
-                OnPropertyChanged();
+        // private Driver _selectedItemDriver;
+        //public Driver SelectedItemDriver
+        //{
+        //    get => _selectedItemDriver;
+        //    set
+        //    {
+        //        _selectedItemDriver = value;
+        //        OnPropertyChanged();
 
-                if (value != null)
-                {
-                    DriverId = value.Id;
-                }
-            }
-        }
+        //        if (value != null)
+        //        {
+        //            DriverId = value.Id;
+        //        }
+        //    }
+        //}
 
         private int CustomerId { get; set; }
         private int ProductId { get; set; }
-        private int DriverId { get; set; }
+        // private int DriverId { get; set; }
         private bool IsEdit { get; set; }
 
         private DateTime _deliveryDate;
@@ -188,6 +188,7 @@ namespace ManagementDelivery.App.ViewModel
         public decimal TotalPrice => ListDeliveryDetail?.Sum(x => x.Quantity * x.Price) ?? 0;
 
         public ICommand AddCommand { get; set; }
+        public ICommand EditCommand { get; set; }
         public ICommand AddDetailCommand { get; set; }
         public ICommand EditDetailCommand { get; set; }
         public ICommand DeleteDetailCommand { get; set; }
@@ -201,7 +202,7 @@ namespace ManagementDelivery.App.ViewModel
 
             ListProduct = new ObservableCollection<Product>(DataProvider.Ins.DB.Products.Where(x => !x.IsDelete).OrderByDescending(x => x.UpdateAt));
             ListCustomer = new ObservableCollection<Customer>(DataProvider.Ins.DB.Customers.Where(x => !x.IsDelete).OrderByDescending(x => x.UpdateAt));
-            ListDriver = new ObservableCollection<Driver>(DataProvider.Ins.DB.Drivers.Where(x => !x.IsDelete).OrderByDescending(x => x.UpdateAt));
+            // ListDriver = new ObservableCollection<Driver>(DataProvider.Ins.DB.Drivers.Where(x => !x.IsDelete).OrderByDescending(x => x.UpdateAt));
             DeliveryDate = DateTime.Now;
 
             AddCommand = new RelayCommand<Window>((p) => SelectedItemCustomer != null && ListDeliveryDetail.Any(), (p) =>
@@ -222,28 +223,97 @@ namespace ManagementDelivery.App.ViewModel
                     DataProvider.Ins.DB.Deliveries.Add(delivery);
                     foreach (var deliveryDetail in ListDeliveryDetail)
                     {
+                        Stock stock = DataProvider.Ins.DB.Stocks.FirstOrDefault(x => x.ProductId == deliveryDetail.ProductId);
+                        if (stock != null)
+                        {
+                            stock.Quantity -= deliveryDetail.Quantity;
+                        }
+
                         deliveryDetail.DeliveryId = delivery.Id;
                         DataProvider.Ins.DB.DeliveryDetails.Add(deliveryDetail);
                     }
                     DataProvider.Ins.DB.SaveChanges();
 
                     FrameworkElement window = GetWindowParent(p);
-                    var w = window as Window;
-                    if (w != null)
+                    if (window is Window w)
                     {
                         w.Close();
                     }
                 }
             });
 
-            AddDetailCommand = new RelayCommand<object>((p) => SelectedItemProduct != null && SelectedItemDriver != null && Price > 0 && Quantity > 0, (p) =>
+            EditCommand = new RelayCommand<Window>((p) => SelectedItemCustomer != null && ListDeliveryDetail.Any(), (p) =>
+            {
+                if (!IsEdit)
+                {
+                    return;
+                }
+
+                var delivery = DataProvider.Ins.DB.Deliveries.FirstOrDefault(x => x.Id == Delivery.Id);
+                //var delivery = new Delivery()
+                //{
+                //    CustomerId = CustomerId,
+                //    DeliveryDate = DeliveryDate,
+                //    DeliveryDetails = ListDeliveryDetail.ToList(),
+                //    TotalPrice = TotalPrice,
+                //    InsertAt = DateTime.Now,
+                //    UpdateAt = DateTime.Now
+                //};
+
+                MessageBoxResult messageBoxResult = MessageBox.Show("Chắc chắn muốn sửa đơn hàng?", "Xác nhận", MessageBoxButton.YesNo);
+                if (messageBoxResult == MessageBoxResult.Yes && delivery != null)
+                {
+                    delivery.CustomerId = SelectedItemCustomer.Id;
+                    delivery.DeliveryDate = DeliveryDate;
+                    delivery.TotalPrice = TotalPrice;
+                    delivery.UpdateAt = DateTime.Now;
+
+                    //DataProvider.Ins.DB.Deliveries.Add(delivery);
+                    foreach (var deliveryDetail in delivery.DeliveryDetails)
+                    {
+                        DeliveryDetail deliveryDetailCurrent = ListDeliveryDetail.FirstOrDefault(x => x.Id == deliveryDetail.Id);
+                        if (deliveryDetailCurrent != null)
+                        {
+                            var quantityChange = deliveryDetail.Quantity - deliveryDetailCurrent.Quantity;
+                            Stock stock = DataProvider.Ins.DB.Stocks.FirstOrDefault(x => x.ProductId == deliveryDetail.ProductId);
+                            if (stock != null)
+                            {
+                                stock.Quantity += quantityChange;
+                            }
+                        }
+                        else
+                        {
+                            deliveryDetail.IsDelete = true;
+                            Stock stock = DataProvider.Ins.DB.Stocks.FirstOrDefault(x => x.ProductId == deliveryDetail.ProductId);
+                            if (stock != null)
+                            {
+                                stock.Quantity += deliveryDetail.Quantity;
+                            }
+                        }
+
+                        //deliveryDetail.DeliveryId = delivery.Id;
+                        //DataProvider.Ins.DB.DeliveryDetails.Add(deliveryDetail);
+                    }
+                    DataProvider.Ins.DB.SaveChanges();
+
+                    FrameworkElement window = GetWindowParent(p);
+                    if (window is Window w)
+                    {
+                        w.Close();
+                    }
+                }
+            });
+
+            AddDetailCommand = new RelayCommand<object>((p) => SelectedItemProduct != null 
+            // && SelectedItemDriver != null 
+            && Price > 0 && Quantity > 0, (p) =>
             {
                 var delivery = new DeliveryDetail()
                 {
                     ProductId = ProductId,
                     Product = SelectedItemProduct,
-                    DriverId = DriverId,
-                    Driver = SelectedItemDriver,
+                    // DriverId = DriverId,
+                    // Driver = SelectedItemDriver,
                     Quantity = Quantity,
                     Price = Price,
                     Status = Status,
@@ -257,22 +327,31 @@ namespace ManagementDelivery.App.ViewModel
                 OnPropertyChanged("ListDeliveryDetail");
             });
 
-            EditDetailCommand = new RelayCommand<object>((p) => SelectedItem != null && SelectedItemProduct != null && SelectedItemDriver != null && Price > 0 && Quantity > 0, (p) =>
+            EditDetailCommand = new RelayCommand<object>((p) => SelectedItem != null 
+            && SelectedItemProduct != null 
+            // && SelectedItemDriver != null 
+            && Price > 0 
+            && Quantity > 0, (p) =>
             {
                 var delivery = ListDeliveryDetail.FirstOrDefault(x => x.Id == SelectedItem.Id);
                 if (delivery != null)
                 {
                     delivery.ProductId = ProductId;
-                    delivery.DriverId = DriverId;
+                    // delivery.DriverId = DriverId;
                     delivery.Quantity = Quantity;
                     delivery.Price = Price;
                     delivery.UpdateAt = DateTime.Now;
                 };
 
-                OnPropertyChanged("ListDeliveryDetail"); OnPropertyChanged("TotalPrice");
+                OnPropertyChanged("ListDeliveryDetail");
+                OnPropertyChanged("TotalPrice");
             });
 
-            DeleteDetailCommand = new RelayCommand<object>((p) => SelectedItem != null && SelectedItemProduct != null && SelectedItemDriver != null && Price > 0 && Quantity > 0, (p) =>
+            DeleteDetailCommand = new RelayCommand<object>((p) => SelectedItem != null 
+            && SelectedItemProduct != null 
+            // && SelectedItemDriver != null 
+            && Price > 0 
+            && Quantity > 0, (p) =>
             {
                 MessageBoxResult messageBoxResult = MessageBox.Show("Bạn chắc chắn muốn xóa?", "Xác nhận", MessageBoxButton.YesNo);
                 if (messageBoxResult != MessageBoxResult.Yes)
@@ -281,9 +360,11 @@ namespace ManagementDelivery.App.ViewModel
                 }
 
                 var delivery = ListDeliveryDetail.FirstOrDefault(x => x.Id == SelectedItem.Id);
-                ListDeliveryDetail.Remove(delivery);
 
-                OnPropertyChanged("ListDeliveryDetail"); OnPropertyChanged("TotalPrice");
+                if (delivery != null) ListDeliveryDetail.Remove(delivery);
+
+                OnPropertyChanged("ListDeliveryDetail");
+                OnPropertyChanged("TotalPrice");
             });
 
             ClearCommand = new RelayCommand<object>((p) => SelectedItemCustomer != null, (p) =>
@@ -294,14 +375,14 @@ namespace ManagementDelivery.App.ViewModel
             );
 
             ClearDetailCommand = new RelayCommand<object>((p) => SelectedItemProduct != null
-                                                           || SelectedItemDriver != null
+                                                           // || SelectedItemDriver != null
                                                            || Quantity != 0
                                                            || Price != 0
                                                            || Status != 0, (p) =>
                 {
                     SelectedItem = null;
                     SelectedItemProduct = null;
-                    SelectedItemDriver = null;
+                    // SelectedItemDriver = null;
                     Quantity = 0;
                     Price = 0;
                     Status = 0;

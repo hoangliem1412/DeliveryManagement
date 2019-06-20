@@ -112,19 +112,19 @@ namespace ManagementDelivery.App.ViewModel
                 wd.DataContext = new ProductCategoryViewModel();
                 wd.ShowDialog();
             });
-            DriverCommand = new RelayCommand<object>((p) => true, (p) =>
-            {
-                DriverWindow wd = new DriverWindow();
-                wd.DataContext = new DriverViewModel();
-                wd.ShowDialog();
-            });
+            //DriverCommand = new RelayCommand<object>((p) => true, (p) =>
+            //{
+            //    DriverWindow wd = new DriverWindow();
+            //    wd.DataContext = new DriverViewModel();
+            //    wd.ShowDialog();
+            //});
 
-            SupplierCommand = new RelayCommand<object>((p) => true, (p) =>
-            {
-                SupplierWindow wd = new SupplierWindow();
-                wd.DataContext = new SupplierViewModel();
-                wd.ShowDialog();
-            });
+            //SupplierCommand = new RelayCommand<object>((p) => true, (p) =>
+            //{
+            //    SupplierWindow wd = new SupplierWindow();
+            //    wd.DataContext = new SupplierViewModel();
+            //    wd.ShowDialog();
+            //});
 
             ProductCommand = new RelayCommand<object>((p) => true, (p) =>
             {

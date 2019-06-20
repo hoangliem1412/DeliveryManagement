@@ -61,7 +61,21 @@
                         <ColumnDefinition></ColumnDefinition>
                         <ColumnDefinition></ColumnDefinition>
                     </Grid.ColumnDefinitions>
-                    <Button Command="{Binding GoodsReceiptCommand}" Grid.Column="0" ToolTip="Giao hàng">
+                    <Button Grid.Column="0" Command="{Binding AddDeliveryCommand}" ToolTip="Đơn hàng">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Grid Grid.Row="0">
+                                <TextBlock Text="Xuất hàng" HorizontalAlignment="Center"></TextBlock>
+                            </Grid>
+                            <Grid Grid.Row="1">
+                                <materialDesign:PackIcon Width="24" Height="24"  HorizontalAlignment="Center"  Kind="Altimeter" />
+                            </Grid>
+                        </Grid>
+                    </Button>
+                    <Button Command="{Binding GoodsReceiptCommand}" Grid.Column="1" ToolTip="Giao hàng">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition></RowDefinition>
@@ -75,7 +89,7 @@
                             </Grid>
                         </Grid>
                     </Button>
-                    <Button Command="{Binding StockCommand}" Grid.Column="1" ToolTip="Kho">
+                    <Button Command="{Binding StockCommand}" Grid.Column="2" ToolTip="Kho">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition></RowDefinition>
@@ -89,7 +103,7 @@
                             </Grid>
                         </Grid>
                     </Button>
-                    <Button Command="{Binding ProductCommand}" Grid.Column="2" ToolTip="Sản phẩm">
+                    <Button Command="{Binding ProductCommand}" Grid.Column="3" ToolTip="Sản phẩm">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition></RowDefinition>
@@ -103,7 +117,7 @@
                             </Grid>
                         </Grid>
                     </Button>
-                    <Button Grid.Column="3" Command="{Binding ProductCategoryCommand}" ToolTip="Người giao hàng">
+                    <Button Grid.Column="4" Command="{Binding ProductCategoryCommand}" ToolTip="Người giao hàng">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition></RowDefinition>
@@ -118,7 +132,7 @@
                         </Grid>
                         
                     </Button>
-                    <Button Grid.Column="4" Command="{Binding SupplierCommand}" ToolTip="Nhà cung cấp">
+                    <!--<Button Grid.Column="4" Command="{Binding SupplierCommand}" ToolTip="Nhà cung cấp">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition></RowDefinition>
@@ -131,7 +145,7 @@
                                 <materialDesign:PackIcon Width="24" Height="24"  HorizontalAlignment="Center"  Kind="Factory" />
                             </Grid>
                         </Grid>
-                    </Button>
+                    </Button>-->
                     <Button Grid.Column="5" Command="{Binding CustomerCommand}" ToolTip="Khách hàng">
                         <Grid>
                             <Grid.RowDefinitions>
@@ -146,7 +160,7 @@
                             </Grid>
                         </Grid>
                     </Button>
-                    <Button Grid.Column="6" Command="{Binding DriverCommand}" ToolTip="Loại sản phẩm">
+                    <!--<Button Grid.Column="6" Command="{Binding DriverCommand}" ToolTip="Loại sản phẩm">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition></RowDefinition>
@@ -159,7 +173,7 @@
                                 <materialDesign:PackIcon Width="24" Height="24"  HorizontalAlignment="Center"  Kind="Altimeter" />
                             </Grid>
                         </Grid>
-                    </Button>
+                    </Button>-->
                 </Grid>
             </Grid>
 
